@@ -16,11 +16,14 @@ import matplotlib.pylab as plt
 # @ return 加性噪声
 # #
 def wgn(x, snr):
-    snr = 10 ** (snr / 10.0)
-    xpower = np.sum(x ** 2) / len(x)  # 原始信号的平均功率？
-    npower = xpower / snr  # 噪声？
-
-    return np.random.randn(len(x)) * np.sqrt(npower)
+    # snr = 10 ** (snr / 10.0)
+    # xpower = np.sum(x ** 2) / len(x)  # 原始信号的平均功率？
+    # npower = xpower / snr  # 噪声？
+    #
+    # return np.random.randn(len(x)) * np.sqrt(npower)
+    P_signal = np.sum(abs(x) ** 2) / len(x)
+    P_noise = P_signal / (10 ** (snr / 10.0))
+    return np.random.randn(len(x)) * np.sqrt(P_noise)
 
 
 # #
@@ -33,8 +36,6 @@ def addAWGNComplex(real, imag, snr):
 
     realTemp = real + wgn(real, snr)
     imagTemp = imag + wgn(imag, snr)
-
-
 
     complexSignalAddAwgn = toComplex(realTemp, imagTemp)
 
@@ -66,13 +67,13 @@ if __name__ == "__main__":
     plt.title("before add awgn")
 
     # b =  a + wgn(a, 6)
-    b = addAWGN(a, 25)
+    b = addAWGN(a, 1)
     plt.subplot(222)  # 两行两列第二个位置
     plt.plot(t, b)
     plt.title("after add awgn")
 
     plt.subplot(223)  # 两行两列第三个位置
-    n = wgn(a, 25)
+    n = wgn(a, 0.1)
     plt.hist(n, bins=100, density=True)
 
     plt.subplot(224)  # 两行两列第四个位置

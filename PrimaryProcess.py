@@ -17,13 +17,17 @@ from GenerteSignal import generateBits
 from QAM16 import qam16
 from IFFTComplexSignal import ifftComplexSignal
 from AddAWGN import addAWGNComplex
-from GlobalParameter import SNR
+#from GlobalParameter import SNR
 from FFTSignalWithNoise import fftSignalWN
+from DecodeQAM16 import DecodeQAM16
+from Anlysis import calcMismatchRatio
+from GlobalParameter import PrimaryProcessDebug
+
 
 # #
 # @ Debug
 # #
-if __name__ == "__main__":
+def PrimaryProcess(snr):
     """
     随机产生原始比特流
     """
@@ -34,7 +38,8 @@ if __name__ == "__main__":
     """
     complexStreamQAM, complexStreamQAM_Real, complexStreamQAM_Imag = \
         qam16(originalBits)
-    plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, len(complexStreamQAM),1)
+    if PrimaryProcessDebug:
+        plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, len(complexStreamQAM), 1)
 
     # print(f'QAM16: \n {complexStreamQAM}')
     # print(len(complexStreamQAM))
@@ -57,15 +62,41 @@ if __name__ == "__main__":
     IFFT后 信号加噪声 进入高高斯信道
     """
     FFTInputArray, FFTInputArray_Real, FFTInputArray_Imag = \
-        addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, SNR)
-    plotSignalScatter(FFTInputArray_Real, FFTInputArray_Imag, FFTInputArray.shape[0],2)
+        addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, snr)
+    # plotSignalScatter(FFTInputArray_Real, FFTInputArray_Imag, FFTInputArray.shape[0],2)
 
     """
     FFT 快速傅里叶变换
     """
-    FFTOutputArray, FFTOutputArray_Real,  FFTOutputArray_Imag= fftSignalWN(FFTInputArray)
-    plotSignalScatter(FFTOutputArray_Real, FFTOutputArray_Imag, FFTOutputArray.shape[0], 3)
+    FFTOutputArray, FFTOutputArray_I, FFTOutputArray_Q = fftSignalWN(FFTInputArray)
+    if PrimaryProcessDebug:
+        plotSignalScatter(FFTOutputArray_I, FFTOutputArray_Q, FFTOutputArray.shape[0], 2)  # 接收后FFT画图，加噪声后 16QAM
 
-    plt.show()
+    """
+    解调
+    """
+    outBits = DecodeQAM16(FFTOutputArray_I, FFTOutputArray_Q)
+
+    """
+    误比特率或者误码率
+    """
+    errorRatio = calcMismatchRatio(originalBits, np.array(outBits))
+
+    snrPr = format(snr,'.3f')
+    correctRatioPr = format(100 - errorRatio * 100,'.4f')
+    print(f'SNR in {snrPr}dB, correct Ratio : {correctRatioPr} %')
+
+    if PrimaryProcessDebug:
+        plt.show()
+
+    return 100 - errorRatio * 100
+
+
+# #
+# @ Debug(文件内)
+# #
+if __name__ == "__main__":
+
+    PrimaryProcess(0.1)
 
     pass

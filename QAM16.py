@@ -7,12 +7,7 @@
 import numpy as np
 from GlobalParameter import Bits_Per_Symbol  # 每个符号所带的比特数目
 from BasicFunc import departComplex
-
-# 16QAM映射图
-mapping = {'0': (3, 3), '1': (1, 3), '2': (-3, 3), '3': (-1, 3),
-           '4': (3, 1), '5': (1, 1), '6': (-3, 1), '7': (-1, 1),
-           '8': (3, -3), '9': (1, -3), '10': (-3, -3), '11': (-1, -3),
-           '12': (3, -1), '13': (1, -1), '14': (-3, -1), '15': (-1, -1)}
+from GlobalParameter import mapping
 
 
 # #
