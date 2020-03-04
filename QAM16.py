@@ -35,10 +35,12 @@ def translateBits(bits) -> int:
 def qam16(bits: list):
     complexList = []  # list void
     bitsReshape = np.reshape(bits, (int(len(bits) / 4), 4))  # 比特流列表重构，变为n/4行，4列。array 相当与串并转换
+    numberList = []
 
     for i in range(bitsReshape.shape[0]):  # shape[0] 行数
         temp = translateBits(bitsReshape[i, :])  # 转为十进制
         keyTemp = str(temp)
+        numberList.append(temp)
         complexList.append(complex(mapping[keyTemp][0], mapping[keyTemp][1]))  # list
         pass
 
@@ -51,7 +53,7 @@ def qam16(bits: list):
 
     complexListReal_array, complexListImg_array = departComplex(np.array(complexList))  # 分离实部和虚部
 
-    return complexList, complexListReal_array, complexListImg_array
+    return complexList, complexListReal_array, complexListImg_array, numberList
 
 
 # #

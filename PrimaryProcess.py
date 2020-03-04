@@ -12,11 +12,11 @@ import numpy as np
 # import IFFTComplexSignal
 # import BasicFunc
 
-from BasicFunc import plotSignalScatter
+from BasicFunc import plotSignalScatter,getComplexSignalPower
 from GenerteSignal import generateBits
 from QAM16 import qam16
 from IFFTComplexSignal import ifftComplexSignal
-from AddAWGN import addAWGNComplex
+from AddWGN import addAWGNComplex
 #from GlobalParameter import SNR
 from FFTSignalWithNoise import fftSignalWN
 from DecodeQAM16 import DecodeQAM16
@@ -36,7 +36,7 @@ def PrimaryProcess(snr):
     """
     经过16QAM调制
     """
-    complexStreamQAM, complexStreamQAM_Real, complexStreamQAM_Imag = \
+    complexStreamQAM, complexStreamQAM_Real, complexStreamQAM_Imag, numberOrigin = \
         qam16(originalBits)
     if PrimaryProcessDebug:
         plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, len(complexStreamQAM), 1)
@@ -47,32 +47,43 @@ def PrimaryProcess(snr):
     complexStreamIFFT, complexStreamIFFT_Real, complexStreamIFFT_Imag = \
         ifftComplexSignal(complexStreamQAM)
 
+    """
+    IFFT后 信号加噪声 进入高斯信道。此处是分为两路，再分开加噪声。合理吗？ 
+    """
     # plt.figure(1,figsize=(10, 16))
     # plt.subplot(211)
     # plt.psd(complexStreamIFFT)
     # plt.title("original signal after IFFT")
 
-    """
-    IFFT后 信号加噪声 进入高高斯信道
-    """
     FFTInputArray, FFTInputArray_Real, FFTInputArray_Imag = \
         addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, snr)
+
+    # plt.subplot(212)
+    # plt.psd(FFTInputArray)
+    # plt.title("add wgn")
+    #
+    # plt.show()
+
+    Ps = getComplexSignalPower(complexStreamIFFT)
+    Pn = getComplexSignalPower(FFTInputArray - complexStreamIFFT)
+
+    # print(f'信号功率 {Ps}')
+    # print(f'噪声功率 {Pn}')
+    # print(f'snr : {10 * np.log10(Ps / Pn)} dB')
+
+    snr_out = 10 * np.log10(Ps / Pn)
 
     """
     FFT 快速傅里叶变换
     """
-    FFTOutputArray, FFTOutputArray_I, FFTOutputArray_Q = fftSignalWN(FFTInputArray)
+    FFTOutputArray, FFTOutputArray_Real, FFTOutputArray_Imag = fftSignalWN(FFTInputArray)
     if PrimaryProcessDebug:
-        plotSignalScatter(FFTOutputArray_I, FFTOutputArray_Q, FFTOutputArray.shape[0], 2)  # 接收后FFT画图，加噪声后 16QAM
-
-    # plt.subplot(212)
-    # plt.psd(FFTOutputArray)
-    # plt.title("add wgn")
+        plotSignalScatter(FFTOutputArray_Real, FFTOutputArray_Imag, FFTOutputArray.shape[0], 2)  # 接收后FFT画图，加噪声后 16QAM
 
     """
     解调
     """
-    outBits = DecodeQAM16(FFTOutputArray_I, FFTOutputArray_Q)
+    outBits, outNumber = DecodeQAM16(FFTOutputArray_Real, FFTOutputArray_Imag)
 
     """
     误比特率或者误码率
@@ -83,12 +94,12 @@ def PrimaryProcess(snr):
     计算和显示重要信息
     """
     snrPr = format(snr,'.3f')
+    snr_outPr = format(snr_out,'.3f')
     correctRatioPr = format(100 - errorRatio * 100,'.4f')
-    print(f'SNR in {snrPr}dB, correct Ratio : {correctRatioPr} %')
+    print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
 
     if PrimaryProcessDebug:
         plt.show()
-    plt.show()
 
     return 100 - errorRatio * 100
 
@@ -98,6 +109,6 @@ def PrimaryProcess(snr):
 # #
 if __name__ == "__main__":
 
-    PrimaryProcess(5)
+    PrimaryProcess(0.1)
 
     pass

@@ -6,6 +6,7 @@
 
 import numpy as np
 from GlobalParameter import CalcBitsError
+import GlobalParameter
 
 
 # #
@@ -28,11 +29,12 @@ def calcMismatchRatio(a, b):
 
         return count / length
     else:
-        tempA = np.zeros(4)
-        tempB = np.zeros(4)
-        for i in np.arange(int(length / 4)):
-            tempA = a[i * 4: i * 4 + 4]
-            tempB = b[i * 4: i * 4 + 4]
+        checkLength = GlobalParameter.Bits_Per_Symbol * GlobalParameter.Symbol_Per_Carrier
+        tempA = np.zeros(checkLength)
+        tempB = np.zeros(checkLength)
+        for i in np.arange(int(length / checkLength)):
+            tempA = a[i * checkLength: i * checkLength + checkLength]
+            tempB = b[i * checkLength: i * checkLength + checkLength]
             if np.array_equal(tempA, tempB):
                 pass
             else:
@@ -40,7 +42,7 @@ def calcMismatchRatio(a, b):
                 pass
             pass
 
-        return count / (float(length / 4.0))
+        return count / (float(length / checkLength))
 
 
 # #

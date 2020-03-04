@@ -6,11 +6,11 @@
 DEBUG = False  # 全局调试变量
 
 # initial set up
-OFDM_Carrier_Count = 2000  # OFDM信号所携带的载波数目设置
-Symbol_Per_Carrier = 1000  # 每一个载波设置的符号数目
+OFDM_Carrier_Count = 500  # OFDM信号所携带的载波数目设置
+Symbol_Per_Carrier = 4  # 每一个载波设置的符号数目
 Bits_Per_Symbol = 4  # 每一个符号所带的信息量，4比特，默认用16QAM
 SNR = 25  # 信噪比设置
-CalcBitsError = True  # 是否计算误比特率
+CalcBitsError = False  # 是否计算误比特率
 PrimaryProcessDebug = False # 是否做主过程调试
 
 # # 16QAM映射图

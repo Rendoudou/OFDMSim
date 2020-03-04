@@ -4,9 +4,10 @@
 @ DD
 """
 
-import numpy as np
-from BasicFunc import toComplex
 import matplotlib.pylab as plt
+import numpy as np
+
+from BasicFunc import toComplex
 
 
 # #
@@ -27,19 +28,51 @@ def wgn(x, snr):
 
 
 # #
-# @ func: def addAWGN(real, imag, snr):
+# @ func: def awgn(real, imag, snr):
 # @ 信号加噪声
 # @ para real 输入信号实部， imag 输入信号虚部， snr 信噪比
 # @ return 加噪结果
 # #
-def addAWGNComplex(real, imag, snr):
-
+def awgn(real, imag, snr):
     realTemp = real + wgn(real, snr)
     imagTemp = imag + wgn(imag, snr)
 
     complexSignalAddAwgn = toComplex(realTemp, imagTemp)
 
     return complexSignalAddAwgn, realTemp, imagTemp
+
+
+# #
+# @ func: def addAWGNComplex(real, imag, snr):
+# @ 信号加噪声
+# @ para real 输入信号实部, imag 输入信号虚部， snr 信噪比
+# @ return 加噪结果
+# #
+def addAWGNComplex(real, imag, snr):
+
+    length = real.shape[0]
+    signal = np.zeros((2,length))
+    signal[0,] = real
+    signal[1,] = imag
+
+    noise = np.random.randn(signal.shape[0], signal.shape[1])  # 产生N(0,1)噪声数据
+    noise = noise - np.mean(noise)  # 均值为0
+    signal_power = np.linalg.norm(signal) ** 2 / signal.size  # 此处是信号的std**2
+    noise_variance = signal_power / np.power(10, (snr / 10))  # 此处是噪声的std**2
+    noise = (np.sqrt(noise_variance) / np.std(noise)) * noise  # 此处是噪声的std**2
+
+    noise_power = np.linalg.norm(noise) ** 2 / noise.size
+
+    # print(signal_power)
+    # print(noise_power)
+    # print(f'snr : {10 * np.log10(signal_power / noise_power)} dB')
+
+    signal_noise = noise + signal
+    signal_complex = toComplex(signal_noise[0,], signal_noise[1,])
+    real_noise = signal_noise[0,]
+    imag_noise = signal_noise[1,]
+
+    return signal_complex, real_noise, imag_noise
 
 
 # #
@@ -56,6 +89,12 @@ def addAWGN(x, snr):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
+
+    a = np.array([1, -1, 3, 3])
+    b = np.array([3, 3, -3, 3])
+    s_noise_C, s_noise_real, s_noise_imag = addAWGNComplex(a, b, 0.1)
+
+
     # 测试噪声
     t = np.arange(0, 100000) * 0.01
     a = np.cos(t)

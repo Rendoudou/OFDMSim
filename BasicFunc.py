@@ -15,7 +15,6 @@ from matplotlib import pylab as plt
 # @ return ifft后的复数符号，实部，虚部
 # #
 def plotSignalScatter(a, b, n: int, pos):
-
     plt.figure(int(pos))
     plt.scatter(a[0:int(n)], b[0:int(n)])  # 实部 虚部 画星座图 a array 从0到n-1
     plt.title(f'plot img {pos}')
@@ -47,7 +46,6 @@ def toComplex(real, imag):
 # @ return void
 # #
 def departComplex(array):
-
     realTemp = np.zeros(array.shape[0])
     imagTemp = np.zeros(array.shape[0])
 
@@ -56,6 +54,24 @@ def departComplex(array):
         imagTemp[i] = array[i].imag
 
     return realTemp, imagTemp
+
+
+# #
+# @ def getComplexSignalPower(signal):
+# @ 复数信号的功率
+# @ para array 复数信号
+# @ return void
+# #
+def getComplexSignalPower(signal):
+    s_temp = np.zeros((2, len(signal)))
+    s_temp_real, s_temp_imag = departComplex(signal)
+
+    s_temp[0,] = s_temp_real
+    s_temp[1,] = s_temp_imag
+
+    power = np.linalg.norm(s_temp) ** 2 / s_temp.size
+
+    return power
 
 
 # #

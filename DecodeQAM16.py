@@ -36,23 +36,25 @@ def toBits(x):
 # @ para 从高斯信道中接收的信号经过FFT
 # @ return 解调后信息阵列
 # #
-def DecodeQAM16(signal_i, signal_q):
+def DecodeQAM16(signal_real, signal_imag):
 
-    if signal_i.shape[0] != signal_q.shape[0]:
+    if signal_real.shape[0] != signal_imag.shape[0]:
         print("OFDM仿真 ： error")
-    length = signal_i.shape[0]
+    length = signal_real.shape[0]
     symbol16QAM = np.zeros((length, 2))  # 用作存储解码得到的16QAM符号（接收端）
+    number16QAM = np.zeros(length)
     bitsOut = np.zeros(length * 4)  # 用作存储解码得到的比特流（接收端）
     dis = []
 
     for i in np.arange(length):
 
         for j in np.arange(16):
-            disTemp = (signal_i[i] - mapping[str(j)][0]) ** 2 + (signal_q[i] - mapping[str(j)][1]) ** 2
+            disTemp = (signal_real[i] - mapping[str(j)][0]) ** 2 + (signal_imag[i] - mapping[str(j)][1]) ** 2
             dis.append(disTemp)
             pass
 
-        symbol16QAM[i,] = mapping[str(dis.index(min(dis)))]
+        symbol16QAM[i,] = mapping[str(dis.index(min(dis)))]  # 返回最小距离的坐标
+        number16QAM[i] = dis.index(min(dis))
         bitsOut[i * 4: i * 4 + 4] = toBits(dis.index(min(dis)))
         dis.clear()  # 列表清空，比较下一个符号
         pass
@@ -60,13 +62,17 @@ def DecodeQAM16(signal_i, signal_q):
     # print(type(bitsOut))
     # print(type(bitsOut.astype(int)))
     bitsOut = bitsOut.astype(int)
-    return bitsOut
+    return bitsOut, number16QAM
 
 
 # #
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
+
+    liatT = [1,2,3,4]
+
+    print(liatT.index(2))
 
     a = bin(10)
     b = list(a)
