@@ -3,6 +3,8 @@ import numpy as np
 
 from PrimaryProcess import PrimaryProcess
 
+import imtoolkit
+
 #
 # 主入口
 #

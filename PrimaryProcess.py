@@ -41,29 +41,22 @@ def PrimaryProcess(snr):
     if PrimaryProcessDebug:
         plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, len(complexStreamQAM), 1)
 
-    # print(f'QAM16: \n {complexStreamQAM}')
-    # print(len(complexStreamQAM))
-    #
-    # print(np.array(complexStreamQAM))
-    # print(np.array(complexStreamQAM).shape)
-
     """
     IFFT 快速傅里叶逆变换
     """
     complexStreamIFFT, complexStreamIFFT_Real, complexStreamIFFT_Imag = \
         ifftComplexSignal(complexStreamQAM)
-    # plt.figure(figsize=(20, 32))
-    # plt.subplot(111)
+
+    # plt.figure(1,figsize=(10, 16))
+    # plt.subplot(211)
     # plt.psd(complexStreamIFFT)
-    # plt.grid(True)
-    # plt.show()
+    # plt.title("original signal after IFFT")
 
     """
     IFFT后 信号加噪声 进入高高斯信道
     """
     FFTInputArray, FFTInputArray_Real, FFTInputArray_Imag = \
         addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, snr)
-    # plotSignalScatter(FFTInputArray_Real, FFTInputArray_Imag, FFTInputArray.shape[0],2)
 
     """
     FFT 快速傅里叶变换
@@ -71,6 +64,10 @@ def PrimaryProcess(snr):
     FFTOutputArray, FFTOutputArray_I, FFTOutputArray_Q = fftSignalWN(FFTInputArray)
     if PrimaryProcessDebug:
         plotSignalScatter(FFTOutputArray_I, FFTOutputArray_Q, FFTOutputArray.shape[0], 2)  # 接收后FFT画图，加噪声后 16QAM
+
+    # plt.subplot(212)
+    # plt.psd(FFTOutputArray)
+    # plt.title("add wgn")
 
     """
     解调
@@ -82,12 +79,16 @@ def PrimaryProcess(snr):
     """
     errorRatio = calcMismatchRatio(originalBits, np.array(outBits))
 
+    """
+    计算和显示重要信息
+    """
     snrPr = format(snr,'.3f')
     correctRatioPr = format(100 - errorRatio * 100,'.4f')
     print(f'SNR in {snrPr}dB, correct Ratio : {correctRatioPr} %')
 
     if PrimaryProcessDebug:
         plt.show()
+    plt.show()
 
     return 100 - errorRatio * 100
 
@@ -97,6 +98,6 @@ def PrimaryProcess(snr):
 # #
 if __name__ == "__main__":
 
-    PrimaryProcess(0.1)
+    PrimaryProcess(5)
 
     pass

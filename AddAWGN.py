@@ -16,14 +16,14 @@ import matplotlib.pylab as plt
 # @ return 加性噪声
 # #
 def wgn(x, snr):
-    # snr = 10 ** (snr / 10.0)
-    # xpower = np.sum(x ** 2) / len(x)  # 原始信号的平均功率？
-    # npower = xpower / snr  # 噪声？
-    #
-    # return np.random.randn(len(x)) * np.sqrt(npower)
-    P_signal = np.sum(abs(x) ** 2) / len(x)
-    P_noise = P_signal / (10 ** (snr / 10.0))
-    return np.random.randn(len(x)) * np.sqrt(P_noise)
+    snrTemp = 10 ** (snr / 10.0)
+    xpower = np.sum(abs(x) ** 2) / len(x)  # 输入信号的功率
+    npower = xpower / snrTemp  # 噪声应有的功率
+
+    return np.random.randn(len(x)) * np.sqrt(npower)
+    # P_signal = np.sum(abs(x) ** 2) / len(x)  # 原始信号功率
+    # P_noise = P_signal / (10 ** (snr / 10.0))
+    # return np.random.randn(len(x)) * np.sqrt(P_noise)
 
 
 # #
@@ -80,5 +80,29 @@ if __name__ == "__main__":
     plt.psd(n)
 
     plt.show()
+
+    # plt.figure(1, figsize=(10, 12))
+    # plt.subplot(221)
+    # plt.psd(real)
+    # plt.title("signal")
+    #
+    # plt.subplot(222)
+    # plt.psd(realTemp)
+    # plt.title("signal_noise")
+    #
+    # plt.subplot(223)
+    # plt.psd(realTemp - real)
+    # plt.title("noise")
+    #
+    # plt.show()
+    #
+    # signal = real
+    # signal_noise = realTemp
+    # Ps = (np.linalg.norm(signal - signal.mean())) ** 2  # signal power
+    # Pn = (np.linalg.norm(signal - signal_noise)) ** 2  # noise power
+    #
+    # print(f'信号功率 {Ps}')
+    # print(f'噪声功率 {Pn}')
+    # print(f'snr : {10 * np.log10(Ps / Pn)} dB')
 
     pass

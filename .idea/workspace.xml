@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="071c557d-c7f0-4013-8289-6c6895731f03" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DecodeQAM16.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Simulate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AddAWGN.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddAWGN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Decode16QAM.py" beforeDir="false" afterPath="$PROJECT_DIR$/Anlysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalParameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalParameter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QAM16.py" beforeDir="false" afterPath="$PROJECT_DIR$/QAM16.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimaryProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IFFTComplexSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/IFFTComplexSignal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PrimaryProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimaryProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Simulate.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +36,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Simulate">
+  <component name="RunManager" selected="Python.PrimaryProcess (1)">
     <configuration name="AddAWGN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="OFDMSimulate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,9 +144,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.PrimaryProcess (1)" />
         <item itemvalue="Python.Simulate" />
         <item itemvalue="Python.AddAWGN" />
-        <item itemvalue="Python.PrimaryProcess (1)" />
         <item itemvalue="Python.Anlysis" />
         <item itemvalue="Python.PrimaryProcess" />
       </list>
@@ -173,49 +170,64 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583130414647" />
-    <state width="1899" height="379" key="GridCell.Tab.0.bottom" timestamp="1583250852987">
+    <state width="1747" height="466" key="DebuggerActiveHint" timestamp="1583314227501">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.0.center" timestamp="1583250852987">
+    <state width="1747" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1583314227501" />
+    <state width="1899" height="281" key="GridCell.Tab.0.bottom" timestamp="1583318479316">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.0.left" timestamp="1583250852987">
+    <state width="1899" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479316" />
+    <state width="1899" height="281" key="GridCell.Tab.0.center" timestamp="1583318479315">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.0.right" timestamp="1583250852987">
+    <state width="1899" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479315" />
+    <state width="1899" height="281" key="GridCell.Tab.0.left" timestamp="1583318479315">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.1.bottom" timestamp="1583250852988">
+    <state width="1899" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479315" />
+    <state width="1899" height="281" key="GridCell.Tab.0.right" timestamp="1583318479316">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852988" />
-    <state width="1899" height="379" key="GridCell.Tab.1.center" timestamp="1583250852987">
+    <state width="1899" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479316" />
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom" timestamp="1583318479311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.1.left" timestamp="1583250852987">
+    <state width="1899" height="375" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479311" />
+    <state width="1899" height="375" key="GridCell.Tab.1.center" timestamp="1583318479311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852987" />
-    <state width="1899" height="379" key="GridCell.Tab.1.right" timestamp="1583250852988">
+    <state width="1899" height="375" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479311" />
+    <state width="1899" height="375" key="GridCell.Tab.1.left" timestamp="1583318479311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="379" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583250852988" />
+    <state width="1899" height="375" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479311" />
+    <state width="1899" height="375" key="GridCell.Tab.1.right" timestamp="1583318479311">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="375" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583318479311" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1583130470646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583130470646" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583249233691">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583318556809">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583249233691" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583318556809" />
     <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1583245785047">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="780" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583245785047" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/PrimaryProcess.py</url>
+          <line>92</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
