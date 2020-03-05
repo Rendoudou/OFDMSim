@@ -66,12 +66,24 @@ def getComplexSignalPower(signal):
     s_temp = np.zeros((2, len(signal)))
     s_temp_real, s_temp_imag = departComplex(signal)
 
-    s_temp[0,] = s_temp_real
-    s_temp[1,] = s_temp_imag
+    s_temp[0, ] = s_temp_real
+    s_temp[1, ] = s_temp_imag
 
     power = np.linalg.norm(s_temp) ** 2 / s_temp.size
 
     return power
+
+
+# #
+# @ def process_bar(percent, start_str='', end_str='', total_length=0):
+# @ 进度条
+# @ para percent
+# @ return void
+# #
+def processBar(percent, start_str='', end_str='', total_length=0):
+    bar = ''.join(["\033[31m%s\033[0m" % '   '] * int(percent * total_length)) + ''
+    bar = '\r' + start_str + bar.ljust(total_length) + ' {:0>4.1f}%|'.format(percent * 100) + end_str
+    print(bar, end='', flush=True)
 
 
 # #

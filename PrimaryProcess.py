@@ -27,7 +27,7 @@ from GlobalParameter import PrimaryProcessDebug
 # #
 # @ Debug
 # #
-def PrimaryProcess(snr):
+def primaryProcess(snr):
     """
     随机产生原始比特流
     """
@@ -50,28 +50,13 @@ def PrimaryProcess(snr):
     """
     IFFT后 信号加噪声 进入高斯信道。此处是分为两路，再分开加噪声。合理吗？ 
     """
-    # plt.figure(1,figsize=(10, 16))
-    # plt.subplot(211)
-    # plt.psd(complexStreamIFFT)
-    # plt.title("original signal after IFFT")
-
     FFTInputArray, FFTInputArray_Real, FFTInputArray_Imag = \
         addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, snr)
 
-    # plt.subplot(212)
-    # plt.psd(FFTInputArray)
-    # plt.title("add wgn")
-    #
-    # plt.show()
-
-    Ps = getComplexSignalPower(complexStreamIFFT)
-    Pn = getComplexSignalPower(FFTInputArray - complexStreamIFFT)
-
-    # print(f'信号功率 {Ps}')
-    # print(f'噪声功率 {Pn}')
-    # print(f'snr : {10 * np.log10(Ps / Pn)} dB')
-
-    snr_out = 10 * np.log10(Ps / Pn)
+    if PrimaryProcessDebug:
+        Ps = getComplexSignalPower(complexStreamIFFT)
+        Pn = getComplexSignalPower(FFTInputArray - complexStreamIFFT)
+        snr_out = 10 * np.log10(Ps / Pn)
 
     """
     FFT 快速傅里叶变换
@@ -91,17 +76,16 @@ def PrimaryProcess(snr):
     errorRatio = calcMismatchRatio(originalBits, np.array(outBits))
 
     """
-    计算和显示重要信息
+    计算和显示重要信息,when debug
     """
-    snrPr = format(snr,'.3f')
-    snr_outPr = format(snr_out,'.3f')
-    correctRatioPr = format(100 - errorRatio * 100,'.4f')
-    print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
-
     if PrimaryProcessDebug:
+        snrPr = format(snr, '.3f')
+        snr_outPr = format(snr_out, '.3f')
+        correctRatioPr = format(100 - errorRatio * 100, '.4f')
+        print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
         plt.show()
 
-    return 100 - errorRatio * 100
+    return errorRatio
 
 
 # #
@@ -109,6 +93,6 @@ def PrimaryProcess(snr):
 # #
 if __name__ == "__main__":
 
-    PrimaryProcess(0.1)
+    primaryProcess(0)
 
     pass

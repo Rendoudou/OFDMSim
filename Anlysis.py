@@ -29,7 +29,8 @@ def calcMismatchRatio(a, b):
 
         return count / length
     else:
-        checkLength = GlobalParameter.Bits_Per_Symbol * GlobalParameter.Symbol_Per_Carrier
+        # checkLength = GlobalParameter.Bits_Per_Symbol * GlobalParameter.Symbol_Per_Carrier
+        checkLength = GlobalParameter.Bits_Per_Symbol
         tempA = np.zeros(checkLength)
         tempB = np.zeros(checkLength)
         for i in np.arange(int(length / checkLength)):

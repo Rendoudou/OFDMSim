@@ -1,29 +1,40 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from PrimaryProcess import PrimaryProcess
+from PrimaryProcess import primaryProcess
+from BasicFunc import processBar
+from tqdm import tqdm
 
-import imtoolkit
+from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
+import warnings
+
+warnings.simplefilter('ignore', category=NumbaDeprecationWarning)
+warnings.simplefilter('ignore', category=NumbaPendingDeprecationWarning)
+
+from GlobalParameter import start, end, path, dis
+
+
 
 #
 # 主入口
 #
 if __name__ == "__main__":
 
-    CorrectRatioBar = np.zeros(250)  # 1*250空数组
+    ErrorRatioBar = np.zeros(dis)  # 1*350空数组
 
-    for i in np.arange(1, 251):
-        snr = i * 0.1
-        tempCorrectRatio = PrimaryProcess(snr)
-        CorrectRatioBar[i - 1] = tempCorrectRatio
+    for i in tqdm(np.arange(start, end)):
+        snr = i * path
+        tempCorrectRatio = primaryProcess(snr)
+        ErrorRatioBar[i - start] = tempCorrectRatio
+        # processBar((i + 100) / 350, start_str='', end_str='100%', total_length=15)
 
-    plt.figure(figsize=(16, 20))
+    plt.figure(figsize=(8, 10))
 
     plt.subplot(111)
-    ax = plt.plot(np.arange(1, 251) * 0.1, CorrectRatioBar)
+    plt.semilogy(np.arange(start, end) * path, ErrorRatioBar)  # y轴使用科学计数法
     # ax.set_xlim([0, 25])
     plt.xlabel("SNR/dB")
-    plt.ylabel("CorrectRatio")
+    plt.ylabel("BER")
     plt.grid(True)
     plt.show()
 
