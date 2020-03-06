@@ -6,7 +6,8 @@
 
 import numpy as np
 from BasicFunc import departComplex
-
+from GlobalParameter import IFFTLength
+FFTLength = IFFTLength
 
 # #
 # @ def fftSignalWN(signal):
@@ -16,7 +17,7 @@ from BasicFunc import departComplex
 # #
 def fftSignalWN(signal):
 
-    fftOut = np.fft.fft(signal)
+    fftOut = np.fft.fft(signal,FFTLength)
 
     # realTemp = np.zeros(signal.shape[0])
     # imagTemp = np.zeros(signal.shape[0])

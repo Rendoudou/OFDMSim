@@ -5,7 +5,7 @@
 """
 
 import numpy as np
-from GlobalParameter import Bits_Per_Symbol  # 每个符号所带的比特数目
+from GlobalParameter import BitsPerSymbol  # 每个符号所带的比特数目
 from BasicFunc import departComplex
 from GlobalParameter import mapping
 
@@ -17,7 +17,7 @@ from GlobalParameter import mapping
 # @ return 10进制
 # #
 def translateBits(bits) -> int:
-    if len(bits) != Bits_Per_Symbol:
+    if len(bits) != BitsPerSymbol:
         print("OFDM仿真：error，translateBits")
         SystemExit()
         pass

@@ -36,11 +36,21 @@ def toBits(x):
 # @ para 从高斯信道中接收的信号经过FFT
 # @ return 解调后信息阵列
 # #
+from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier
 def DecodeQAM16(signal_real, signal_imag):
 
-    if signal_real.shape[0] != signal_imag.shape[0]:
+    signal_real_temp = signal_real[0 : SymbolPerCarrier, 0 : OFDMCarrierCount].ravel()
+    signal_imag_temp = signal_imag[0 : SymbolPerCarrier, 0 : OFDMCarrierCount].ravel()
+
+    if signal_real_temp.shape != signal_imag_temp.shape:
         print("OFDM仿真 ： error")
-    length = signal_real.shape[0]
+        return None
+
+    length = OFDMCarrierCount * SymbolPerCarrier
+    if length != signal_real_temp.shape[0]:
+        print("OFDM仿真 ： error")
+        return None
+
     symbol16QAM = np.zeros((length, 2))  # 用作存储解码得到的16QAM符号（接收端）
     number16QAM = np.zeros(length)
     bitsOut = np.zeros(length * 4)  # 用作存储解码得到的比特流（接收端）
@@ -49,7 +59,8 @@ def DecodeQAM16(signal_real, signal_imag):
     for i in np.arange(length):
 
         for j in np.arange(16):
-            disTemp = (signal_real[i] - mapping[str(j)][0]) ** 2 + (signal_imag[i] - mapping[str(j)][1]) ** 2
+            disTemp = (signal_real_temp[i] - mapping[str(j)][0]) ** 2 +\
+                      (signal_imag_temp[i] - mapping[str(j)][1]) ** 2
             dis.append(disTemp)
             pass
 

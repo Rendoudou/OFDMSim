@@ -12,16 +12,18 @@ import numpy as np
 # import IFFTComplexSignal
 # import BasicFunc
 
-from BasicFunc import plotSignalScatter,getComplexSignalPower
+from GlobalParameter import SymbolPerCarrier,TxLength
+from BasicFunc import plotSignalScatter, getComplexSignalPower
 from GenerteSignal import generateBits
 from QAM16 import qam16
 from IFFTComplexSignal import ifftComplexSignal
-from AddWGN import addAWGNComplex
-#from GlobalParameter import SNR
+from AddWGN import AWGNComplex2
+# from GlobalParameter import SNR
 from FFTSignalWithNoise import fftSignalWN
 from DecodeQAM16 import DecodeQAM16
 from Anlysis import calcMismatchRatio
 from GlobalParameter import PrimaryProcessDebug
+from AddDeleteCP import addCP, deleteCP
 
 
 # #
@@ -39,36 +41,54 @@ def primaryProcess(snr):
     complexStreamQAM, complexStreamQAM_Real, complexStreamQAM_Imag, numberOrigin = \
         qam16(originalBits)
     if PrimaryProcessDebug:
-        plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, len(complexStreamQAM), 1)
+        plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, 1)
 
     """
     IFFT 快速傅里叶逆变换
     """
-    complexStreamIFFT, complexStreamIFFT_Real, complexStreamIFFT_Imag = \
+    complexArrayIFFT, complexArrayIFFT_Real, complexArrayIFFT_Imag = \
         ifftComplexSignal(complexStreamQAM)
 
     """
-    IFFT后 信号加噪声 进入高斯信道。此处是分为两路，再分开加噪声。合理吗？ 
+    加循环前缀,和循环后缀
     """
-    FFTInputArray, FFTInputArray_Real, FFTInputArray_Imag = \
-        addAWGNComplex(complexStreamIFFT_Real, complexStreamIFFT_Imag, snr)
+    complexArrayWithCP = addCP(complexArrayIFFT)  # 加入循环前缀和循环后缀 数据规模（symbolPerCarrier * (carriers + GI + GIP)）
 
+    """
+    并串转换
+    """
+    infoTx = complexArrayWithCP.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
+
+    """
+    信号加噪声后  进入高斯信道。此处是分为两路，再分开加噪声。合理吗？ 
+    """
+    infoRx = AWGNComplex2(infoTx, snr)
     if PrimaryProcessDebug:
-        Ps = getComplexSignalPower(complexStreamIFFT)
-        Pn = getComplexSignalPower(FFTInputArray - complexStreamIFFT)
+        Ps = getComplexSignalPower(infoTx)
+        Pn = getComplexSignalPower(infoRx - infoTx)
         snr_out = 10 * np.log10(Ps / Pn)
+
+    """
+    串并转换
+    """
+    complexArrayRx = infoRx.reshape((SymbolPerCarrier, int(TxLength / SymbolPerCarrier)))  # 转换为更易理解的矩阵
+
+    """
+    去循环前缀和循环后缀
+    """
+    complexArrayUsePart = deleteCP(complexArrayRx)  # 去多余
 
     """
     FFT 快速傅里叶变换
     """
-    FFTOutputArray, FFTOutputArray_Real, FFTOutputArray_Imag = fftSignalWN(FFTInputArray)
+    complexArrayFFTOut, complexArrayFFTOut_Real, complexArrayFFTOut_Imag = fftSignalWN(complexArrayUsePart)
     if PrimaryProcessDebug:
-        plotSignalScatter(FFTOutputArray_Real, FFTOutputArray_Imag, FFTOutputArray.shape[0], 2)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(complexArrayFFTOut_Real, complexArrayFFTOut_Imag, 2)  # 接收后FFT画图，加噪声后 16QAM
 
     """
     解调
     """
-    outBits, outNumber = DecodeQAM16(FFTOutputArray_Real, FFTOutputArray_Imag)
+    outBits, outNumber = DecodeQAM16(complexArrayFFTOut_Real, complexArrayFFTOut_Imag)
 
     """
     误比特率或者误码率
@@ -92,7 +112,6 @@ def primaryProcess(snr):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
-    primaryProcess(0)
+    print(primaryProcess(13))
 
     pass

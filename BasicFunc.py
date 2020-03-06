@@ -6,6 +6,7 @@
 
 import numpy as np
 from matplotlib import pylab as plt
+from GlobalParameter import TxLength
 
 
 # #
@@ -14,9 +15,9 @@ from matplotlib import pylab as plt
 # @ para 输入复数的信息：列表
 # @ return ifft后的复数符号，实部，虚部
 # #
-def plotSignalScatter(a, b, n: int, pos):
+def plotSignalScatter(a, b, pos):
     plt.figure(int(pos))
-    plt.scatter(a[0:int(n)], b[0:int(n)])  # 实部 虚部 画星座图 a array 从0到n-1
+    plt.scatter(a, b)  # 实部 虚部 画星座图 a array 从0到n-1
     plt.title(f'plot img {pos}')
 
     pass
@@ -29,14 +30,12 @@ def plotSignalScatter(a, b, n: int, pos):
 # @ return void
 # #
 def toComplex(real, imag):
-    if real.shape[0] != imag.shape[0]:
+    if real.shape != imag.shape:
         print("OFDM仿真：error func toComplex() ")
 
-    temp = []
-    for i in range(real.shape[0]):
-        temp.append(real[i] + imag[i] * 1j)
+    tempArray = real + imag * 1j
 
-    return np.array(temp)  # 转换为numpy.array 返回
+    return tempArray  # 转换为numpy.array 返回
 
 
 # #
@@ -46,12 +45,8 @@ def toComplex(real, imag):
 # @ return void
 # #
 def departComplex(array):
-    realTemp = np.zeros(array.shape[0])
-    imagTemp = np.zeros(array.shape[0])
-
-    for i in range(array.shape[0]):
-        realTemp[i] = array[i].real
-        imagTemp[i] = array[i].imag
+    realTemp = np.real(array)
+    imagTemp = np.imag(array)
 
     return realTemp, imagTemp
 
@@ -66,8 +61,8 @@ def getComplexSignalPower(signal):
     s_temp = np.zeros((2, len(signal)))
     s_temp_real, s_temp_imag = departComplex(signal)
 
-    s_temp[0, ] = s_temp_real
-    s_temp[1, ] = s_temp_imag
+    s_temp[0,] = s_temp_real
+    s_temp[1,] = s_temp_imag
 
     power = np.linalg.norm(s_temp) ** 2 / s_temp.size
 
@@ -84,6 +79,16 @@ def processBar(percent, start_str='', end_str='', total_length=0):
     bar = ''.join(["\033[31m%s\033[0m" % '   '] * int(percent * total_length)) + ''
     bar = '\r' + start_str + bar.ljust(total_length) + ' {:0>4.1f}%|'.format(percent * 100) + end_str
     print(bar, end='', flush=True)
+
+
+# #
+# @ def beLine(signal):
+# @ 串并转换
+# @ para signal
+# @ return 变换后信号
+# #
+def beLine(signal):
+    return signal.reshape((1,))
 
 
 # #

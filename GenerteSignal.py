@@ -16,8 +16,8 @@ import numpy as np
 # #
 def getBitsNeed() -> int:
 
-    ofdmBitsNeed = GlobalParameter.OFDM_Carrier_Count * GlobalParameter.Symbol_Per_Carrier \
-                   * GlobalParameter.Bits_Per_Symbol
+    ofdmBitsNeed = GlobalParameter.OFDMCarrierCount * GlobalParameter.SymbolPerCarrier \
+                   * GlobalParameter.BitsPerSymbol
 
     return ofdmBitsNeed
 

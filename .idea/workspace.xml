@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="071c557d-c7f0-4013-8289-6c6895731f03" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/AddDeleteCP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/lenovo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/lenovo.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddWGN.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddWGN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Anlysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Anlysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BasicFunc.py" beforeDir="false" afterPath="$PROJECT_DIR$/BasicFunc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecodeQAM16.py" beforeDir="false" afterPath="$PROJECT_DIR$/DecodeQAM16.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FFTSignalWithNoise.py" beforeDir="false" afterPath="$PROJECT_DIR$/FFTSignalWithNoise.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenerteSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/GenerteSignal.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalParameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalParameter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IFFTComplexSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/IFFTComplexSignal.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimaryProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimaryProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QAM16.py" beforeDir="false" afterPath="$PROJECT_DIR$/QAM16.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Simulate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Simulate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/VersionRecord" beforeDir="false" afterPath="$PROJECT_DIR$/VersionRecord" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +45,27 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.Simulate">
+    <configuration name="AddDeleteCP" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="OFDMSimulate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AddDeleteCP.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="AddWGN (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="OFDMSimulate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -51,27 +79,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AddWGN.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="AddWGN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="OFDMSimulate" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="D:\Python\OFDMSimulate\AddWGN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -147,9 +154,9 @@
       <list>
         <item itemvalue="Python.Simulate" />
         <item itemvalue="Python.PrimaryProcess (1)" />
+        <item itemvalue="Python.AddDeleteCP" />
         <item itemvalue="Python.DecodeQAM16" />
         <item itemvalue="Python.AddWGN (1)" />
-        <item itemvalue="Python.AddWGN" />
       </list>
     </recent_temporary>
   </component>
@@ -175,38 +182,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1747" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1583314227501" />
-    <state width="1899" height="291" key="GridCell.Tab.0.bottom" timestamp="1583425133164">
+    <state width="936" height="257" key="GridCell.Tab.0.bottom" timestamp="1583504715157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.0.center" timestamp="1583425133164">
+    <state width="936" height="257" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715157" />
+    <state width="936" height="257" key="GridCell.Tab.0.center" timestamp="1583504715156">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.0.left" timestamp="1583425133164">
+    <state width="936" height="257" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715156" />
+    <state width="936" height="257" key="GridCell.Tab.0.left" timestamp="1583504715156">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.0.right" timestamp="1583425133164">
+    <state width="936" height="257" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715156" />
+    <state width="936" height="257" key="GridCell.Tab.0.right" timestamp="1583504715157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.1.bottom" timestamp="1583425133165">
+    <state width="936" height="257" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715157" />
+    <state width="1899" height="343" key="GridCell.Tab.1.bottom" timestamp="1583504715151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133165" />
-    <state width="1899" height="291" key="GridCell.Tab.1.center" timestamp="1583425133164">
+    <state width="1899" height="343" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715151" />
+    <state width="1899" height="343" key="GridCell.Tab.1.center" timestamp="1583504715151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.1.left" timestamp="1583425133164">
+    <state width="1899" height="343" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715151" />
+    <state width="1899" height="343" key="GridCell.Tab.1.left" timestamp="1583504715151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133164" />
-    <state width="1899" height="291" key="GridCell.Tab.1.right" timestamp="1583425133165">
+    <state width="1899" height="343" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715151" />
+    <state width="1899" height="343" key="GridCell.Tab.1.right" timestamp="1583504715151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="291" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583425133165" />
+    <state width="1899" height="343" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583504715151" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1583130470646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -215,14 +222,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1583339369975" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583420088043">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583502790369">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583420088043" />
-    <state x="636" y="253" width="647" height="534" key="find.popup" timestamp="1583420812468">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583502790369" />
+    <state x="221" y="103" width="1498" height="858" key="find.popup" timestamp="1583504175117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="636" y="253" width="647" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583420812468" />
+    <state x="221" y="103" width="1498" height="858" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583504175117" />
     <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1583245785047">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -232,26 +239,21 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AddWGN.py</url>
-          <line>98</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/PrimaryProcess.py</url>
-          <line>87</line>
+          <line>107</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DecodeQAM16.py</url>
-          <line>76</line>
+          <line>87</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DecodeQAM16.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="numberOrigin" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
