@@ -16,8 +16,8 @@ FFTLength = IFFTLength
 # @ return FFT结果
 # #
 def fftSignalWN(signal):
-
-    fftOut = np.fft.fft(signal,FFTLength)
+    fftOut = np.zeros((signal.shape[0], signal.shape[1]))  # 建立存储用空数组
+    fftOut = np.fft.fft(signal, FFTLength)
 
     # realTemp = np.zeros(signal.shape[0])
     # imagTemp = np.zeros(signal.shape[0])
@@ -36,4 +36,16 @@ def fftSignalWN(signal):
 # #
 if __name__ == "__main__":
 
+    a = np.arange(9)
+    b = a.reshape((3,3))
+    b_fft = np.fft.fft(b)
+    b_back = np.fft.ifft(b_fft)
+
+    c_fft = np.fft.fft(b[0,:])
+
+    if (c_fft == b_fft[0,:]).all():
+        print('yes')
+
+    c_back = np.fft.ifft(b_fft[0,:])
+    print(c_back)
     pass

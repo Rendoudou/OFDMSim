@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     for i in tqdm(np.arange(SNRStart, SNREnd)):
         snr = i * SNRPath
-        tempCorrectRatio = primaryProcess(snr)
+        tempCorrectRatio = primaryProcess(snr)  #调制
         ErrorRatioBar[i - SNRStart] = tempCorrectRatio
         # processBar((i + 100) / 350, start_str='', end_str='100%', total_length=15)
 

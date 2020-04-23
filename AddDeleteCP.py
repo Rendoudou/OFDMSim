@@ -15,11 +15,9 @@ import numpy as np
 # @ return 添加结果
 # #
 def addCP(signal):
-    # tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP))) + \
-    #              np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP))) * 1j  # GI = 128, GIP = 20
-    tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP))).astype(complex)
+    tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP)),complex)  # 生成复数空数组
     for i in range(SymbolPerCarrier):
-        for j in range(IFFTLength):  # 512
+        for j in range(IFFTLength):  # 当傅里叶变换长度为512
             tempSignal[i, j + GI] = \
                 signal[i, j]  # 第129 - 第640 用第1 - 第512个数据装填 0 - 511
             pass

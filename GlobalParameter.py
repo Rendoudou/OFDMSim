@@ -6,10 +6,10 @@
 DEBUG = False  # 全局调试变量
 
 # initial set up
-OFDMCarrierCount = 1000  # OFDM信号所携带的载波数目设置
+OFDMCarrierCount = 120  # OFDM信号所携带的载波数目设置
 SymbolPerCarrier = 10  # 每一个载波设置的符号数目，ofdm符号数目
 BitsPerSymbol = 4  # 每一个符号所带的信息量，4比特，默认用16QAM
-IFFTLength = 2048  # IFFT长度
+IFFTLength = 512  # IFFT长度
 PrefixRatio = 1 / 4  #保护间隔与OFDM数据的比例 1/6~1/4
 GI = int(PrefixRatio * IFFTLength)  # 每一个OFDM符号添加的循环前缀长度为1/4*IFFT_bin_length  即保护间隔长度为128
 beta = 1 / 32  # 窗函数滚降系数
@@ -17,9 +17,6 @@ GIP = int(beta * (IFFTLength + GI))  # 循环后缀的长度20
 TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)
 # calc type
 CalcBitsError = True  # 是否计算误比特率
-
-# debug
-PrimaryProcessDebug = False  # 是否做主过程调试
 
 # sim set up
 SNRStart = -100

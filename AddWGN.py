@@ -80,6 +80,4 @@ if __name__ == "__main__":
     c = a + b * 1j
     c_noise, a_noise, b_noise = AWGNComplex(a, b, 0)
 
-
-
     pass

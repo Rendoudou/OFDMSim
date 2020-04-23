@@ -1,5 +1,5 @@
 """
-@ OFDM仿真，未加入机器学习
+@ OFDM仿真，未完全加入机器学习
 @ 主函数文件
 @ DD
 """
@@ -12,9 +12,9 @@ import numpy as np
 # import IFFTComplexSignal
 # import BasicFunc
 
-from GlobalParameter import SymbolPerCarrier,TxLength
+from GlobalParameter import SymbolPerCarrier, TxLength
 from BasicFunc import plotSignalScatter, getComplexSignalPower
-from GenerteSignal import generateBits
+from GenerateSignal import generateBits
 from QAM16 import qam16
 from IFFTComplexSignal import ifftComplexSignal
 from AddWGN import AWGNComplex2
@@ -22,14 +22,23 @@ from AddWGN import AWGNComplex2
 from FFTSignalWithNoise import fftSignalWN
 from DecodeQAM16 import DecodeQAM16
 from Anlysis import calcMismatchRatio
-from GlobalParameter import PrimaryProcessDebug
 from AddDeleteCP import addCP, deleteCP
+# 文件内调试用参数
+PrimaryProcessDebug = False
+snrOut = 0.0
 
 
 # #
 # @ Debug
 # #
 def primaryProcess(snr):
+    """
+    :param snr: 输入信噪比
+    :return: 误码率
+    """
+
+    global snrOut
+
     """
     随机产生原始比特流
     """
@@ -44,7 +53,7 @@ def primaryProcess(snr):
         plotSignalScatter(complexStreamQAM_Real, complexStreamQAM_Imag, 1)
 
     """
-    IFFT 快速傅里叶逆变换
+    IFFT 快速傅里叶逆变换，实现多载波信号快速调制产生结果
     """
     complexArrayIFFT, complexArrayIFFT_Real, complexArrayIFFT_Imag = \
         ifftComplexSignal(complexStreamQAM)
@@ -66,7 +75,7 @@ def primaryProcess(snr):
     if PrimaryProcessDebug:
         Ps = getComplexSignalPower(infoTx)
         Pn = getComplexSignalPower(infoRx - infoTx)
-        snr_out = 10 * np.log10(Ps / Pn)
+        snrOut = 10 * np.log10(Ps / Pn)
 
     """
     串并转换
@@ -100,7 +109,7 @@ def primaryProcess(snr):
     """
     if PrimaryProcessDebug:
         snrPr = format(snr, '.3f')
-        snr_outPr = format(snr_out, '.3f')
+        snr_outPr = format(snrOut, '.3f')
         correctRatioPr = format(100 - errorRatio * 100, '.4f')
         print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
         plt.show()
@@ -112,6 +121,8 @@ def primaryProcess(snr):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-    print(primaryProcess(13))
+
+    PrimaryProcessDebug = True
+    primaryProcess(10)
 
     pass
