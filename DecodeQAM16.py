@@ -6,6 +6,7 @@
 
 from GlobalParameter import mapping
 import numpy as np
+from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier
 
 
 # #
@@ -15,7 +16,6 @@ import numpy as np
 # @ return 2进制数据数组
 # #
 def toBits(x):
-
     bits = np.zeros(4)
     temp = list(bin(x))
     for i in np.arange(4):
@@ -36,11 +36,9 @@ def toBits(x):
 # @ para 从高斯信道中接收的信号经过FFT
 # @ return 解调后信息阵列
 # #
-from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier
 def DecodeQAM16(signal_real, signal_imag):
-
-    signal_real_temp = signal_real[0 : SymbolPerCarrier, 0 : OFDMCarrierCount].ravel()
-    signal_imag_temp = signal_imag[0 : SymbolPerCarrier, 0 : OFDMCarrierCount].ravel()
+    signal_real_temp = signal_real[0: SymbolPerCarrier, 0: OFDMCarrierCount].ravel()
+    signal_imag_temp = signal_imag[0: SymbolPerCarrier, 0: OFDMCarrierCount].ravel()
 
     if signal_real_temp.shape != signal_imag_temp.shape:
         print("OFDM仿真 ： error")
@@ -59,12 +57,12 @@ def DecodeQAM16(signal_real, signal_imag):
     for i in np.arange(length):
 
         for j in np.arange(16):
-            disTemp = (signal_real_temp[i] - mapping[str(j)][0]) ** 2 +\
+            disTemp = (signal_real_temp[i] - mapping[str(j)][0]) ** 2 + \
                       (signal_imag_temp[i] - mapping[str(j)][1]) ** 2
             dis.append(disTemp)
             pass
 
-        symbol16QAM[i,] = mapping[str(dis.index(min(dis)))]  # 返回最小距离的坐标
+        symbol16QAM[i] = mapping[str(dis.index(min(dis)))]  # 返回最小距离的坐标
         number16QAM[i] = dis.index(min(dis))
         bitsOut[i * 4: i * 4 + 4] = toBits(dis.index(min(dis)))
         dis.clear()  # 列表清空，比较下一个符号
@@ -80,8 +78,7 @@ def DecodeQAM16(signal_real, signal_imag):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
-    liatT = [1,2,3,4]
+    liatT = [1, 2, 3, 4]
 
     print(liatT.index(2))
 

@@ -61,8 +61,8 @@ def getComplexSignalPower(signal):
     s_temp = np.zeros((2, len(signal)))
     s_temp_real, s_temp_imag = departComplex(signal)
 
-    s_temp[0,] = s_temp_real
-    s_temp[1,] = s_temp_imag
+    s_temp[0] = s_temp_real
+    s_temp[1] = s_temp_imag
 
     power = np.linalg.norm(s_temp) ** 2 / s_temp.size
 

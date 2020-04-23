@@ -15,7 +15,6 @@ import numpy as np
 # @ return OFDMBitsNeed
 # #
 def getBitsNeed() -> int:
-
     ofdmBitsNeed = GlobalParameter.OFDMCarrierCount * GlobalParameter.SymbolPerCarrier \
                    * GlobalParameter.BitsPerSymbol
 
@@ -29,7 +28,6 @@ def getBitsNeed() -> int:
 # @ return OFDMBitsNeed
 # #
 def generateBits():
-
     ofdmBitsNeed = getBitsNeed()  # 得到所需的比特数目
     if GlobalParameter.DEBUG:
         print(f'OFDM仿真： 单个OFDM符号所需的比特数目：{ofdmBitsNeed}')  # debug
@@ -44,5 +42,4 @@ def generateBits():
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
     pass

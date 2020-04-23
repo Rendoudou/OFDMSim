@@ -26,15 +26,15 @@ def ifftComplexSignal(info):
     # 转为array，分组，分为符SymbolPerCarrier个OFDM符号，
     # OFDMCarrierCount个子载波叠加为一个OFDM符号。
 
-    carriers = np.arange(1, ofdmSymbolCarrierCount + 1) + \
-               (floor(IFFTLength / 4) - floor(ofdmSymbolCarrierCount / 2))  # 共轭对称子载波映射 复数数据对应的IFFT点坐标
-    carriers = carriers.astype(int)  # 转换为整形内容
-    conjugate_carriers = IFFTLength - carriers + 2  # 共轭对称子载波映射,共轭复数对应的IFFT点坐标
-    conjugate_carriers = conjugate_carriers.astype(int)  # 转换为整形内容
-    IFFTModulation = np.zeros((ofdmSymbolCount, IFFTLength)).astype(complex)
-
-    IFFTModulation[:, carriers] = complexArray  # 未添加导频信号,子载波映射在此处
-    IFFTModulation[:, conjugate_carriers] = np.conj(complexArray)  # 共轭复数映射
+    # carriers = np.arange(1, ofdmSymbolCarrierCount + 1) + \
+    #            (floor(IFFTLength / 4) - floor(ofdmSymbolCarrierCount / 2))  # 共轭对称子载波映射 复数数据对应的IFFT点坐标
+    # carriers = carriers.astype(int)  # 转换为整形内容
+    # conjugate_carriers = IFFTLength - carriers + 2  # 共轭对称子载波映射,共轭复数对应的IFFT点坐标
+    # conjugate_carriers = conjugate_carriers.astype(int)  # 转换为整形内容
+    # IFFTModulation = np.zeros((ofdmSymbolCount, IFFTLength)).astype(complex)
+    #
+    # IFFTModulation[:, carriers] = complexArray  # 未添加导频信号,子载波映射在此处
+    # IFFTModulation[:, conjugate_carriers] = np.conj(complexArray)  # 共轭复数映射
 
     # 调制每一个符号
     complexArray_IFFT = np.fft.ifft(complexArray, IFFTLength)  # 对每一行进行ifft，长度是IFFTLength，每一行得到一个调制符号

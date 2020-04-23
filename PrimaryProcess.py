@@ -14,7 +14,7 @@ import numpy as np
 
 from GlobalParameter import SymbolPerCarrier, TxLength
 from BasicFunc import plotSignalScatter, getComplexSignalPower
-from GenerateSignal import generateBits
+from GenerateBits import generateBits
 from QAM16 import qam16
 from IFFTComplexSignal import ifftComplexSignal
 from AddWGN import AWGNComplex2
@@ -102,7 +102,7 @@ def primaryProcess(snr):
     """
     误比特率或者误码率
     """
-    errorRatio = calcMismatchRatio(originalBits, np.array(outBits))
+    [errorRatio, errorCount] = calcMismatchRatio(originalBits, np.array(outBits))
 
     """
     计算和显示重要信息,when debug
@@ -114,7 +114,7 @@ def primaryProcess(snr):
         print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
         plt.show()
 
-    return errorRatio
+    return errorCount
 
 
 # #
@@ -123,6 +123,6 @@ def primaryProcess(snr):
 if __name__ == "__main__":
 
     PrimaryProcessDebug = True
-    primaryProcess(10)
+    primaryProcess(15)
 
     pass

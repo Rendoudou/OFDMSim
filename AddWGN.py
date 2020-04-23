@@ -4,9 +4,7 @@
 @ DD
 """
 
-import matplotlib.pylab as plt
 import numpy as np
-
 from BasicFunc import toComplex
 
 
@@ -60,13 +58,12 @@ def AWGNComplex(real, imag, snr):
 
 
 def AWGNComplex2(signal, snr):
+    tempSignal = np.zeros((2, signal.shape[0]))
+    tempSignal[0] = np.real(signal)
+    tempSignal[1] = np.imag(signal)
 
-    tempSignal = np.zeros((2,signal.shape[0]))
-    tempSignal[0,] = np.real(signal)
-    tempSignal[1,] = np.imag(signal)
-
-    tempSignal_noise = awgn(tempSignal,snr)
-    signalOut = tempSignal_noise[0,] + tempSignal_noise[1,] * 1j
+    tempSignal_noise = awgn(tempSignal, snr)
+    signalOut = tempSignal_noise[0] + tempSignal_noise[1] * 1j
     return signalOut.ravel()
 
 
@@ -74,7 +71,6 @@ def AWGNComplex2(signal, snr):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
     a = np.random.randint(0, 2, 100)
     b = np.random.randint(0, 2, 100)
     c = a + b * 1j

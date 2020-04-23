@@ -3,18 +3,22 @@
 @ 重要参数配置
 """
 
+from NextPow2 import nextPow2
+
 DEBUG = False  # 全局调试变量
 
 # initial set up
 OFDMCarrierCount = 120  # OFDM信号所携带的载波数目设置
 SymbolPerCarrier = 10  # 每一个载波设置的符号数目，ofdm符号数目
 BitsPerSymbol = 4  # 每一个符号所带的信息量，4比特，默认用16QAM
-IFFTLength = 512  # IFFT长度
-PrefixRatio = 1 / 4  #保护间隔与OFDM数据的比例 1/6~1/4
-GI = int(PrefixRatio * IFFTLength)  # 每一个OFDM符号添加的循环前缀长度为1/4*IFFT_bin_length  即保护间隔长度为128
+#IFFTLength = 512  # IFFT长度
+IFFTLength = pow(2,nextPow2(OFDMCarrierCount) + 1)
+PrefixRatio = 1 / 4  # 保护间隔与OFDM数据的比例 1/6~1/4
 beta = 1 / 32  # 窗函数滚降系数
+GI = int(PrefixRatio * IFFTLength)  # 每一个OFDM符号添加的循环前缀长度为1/4*IFFT_bin_length  即保护间隔长度为128
 GIP = int(beta * (IFFTLength + GI))  # 循环后缀的长度20
-TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)
+TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)  # 发送OFDM符号的实际长度
+
 # calc type
 CalcBitsError = True  # 是否计算误比特率
 
@@ -23,6 +27,8 @@ SNRStart = -100
 SNREnd = 150
 SNRPath = 0.1
 SNRDis = SNREnd - SNRStart
+ErrorPerSNR = 40
+SymbolPerRound = OFDMCarrierCount * SymbolPerCarrier * BitsPerSymbol
 
 # 16QAM映射图
 mapping = {'0': (3, 3), '1': (1, 3), '2': (-3, 3), '3': (-1, 3),

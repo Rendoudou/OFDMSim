@@ -15,7 +15,7 @@ import numpy as np
 # @ return 添加结果
 # #
 def addCP(signal):
-    tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP)),complex)  # 生成复数空数组
+    tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP)), complex)  # 生成复数空数组
     for i in range(SymbolPerCarrier):
         for j in range(IFFTLength):  # 当傅里叶变换长度为512
             tempSignal[i, j + GI] = \
@@ -28,7 +28,7 @@ def addCP(signal):
             pass
 
         for j in range(GIP):  # 0 - 19
-            tempSignal[i,int(IFFTLength + GI + j)] = signal[i,j]  # 添加循环后缀  前20个数据放到后面
+            tempSignal[i, int(IFFTLength + GI + j)] = signal[i, j]  # 添加循环后缀  前20个数据放到后面
             pass
 
     return tempSignal
@@ -41,10 +41,9 @@ def addCP(signal):
 # @ return 删除结果
 # #
 def deleteCP(signal):
-
     temp = np.zeros((SymbolPerCarrier, IFFTLength)).astype(complex)
     for i in range(SymbolPerCarrier):
-        temp[i,] = signal[i, GI : GI + IFFTLength]  # 128 - 640 第 129 到 641,128 : 640
+        temp[i] = signal[i, GI: GI + IFFTLength]  # 128 - 640 第 129 到 641,128 : 640
 
     return temp
 
@@ -53,8 +52,6 @@ def deleteCP(signal):
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
-    a = np.zeros((3,4))
-    print(a[1,1:3])
+    a = np.zeros((3, 4))
+    print(a[1, 1:3])
     pass
-
