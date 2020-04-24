@@ -32,7 +32,7 @@ def translateBits(bits) -> int:
 # @ para 输入比特流
 # @ return 复数符号，实部，虚部
 # #
-def qam16(bits: list):
+def qam16(bits):
     complexList = []  # list void
     bitsReshape = np.reshape(bits, (int(len(bits) / 4), 4))  # 比特流列表重构，变为n/4行，4列。array 相当与串并转换
     numberList = []

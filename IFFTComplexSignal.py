@@ -8,9 +8,8 @@ import numpy as np
 from numpy import floor
 
 from BasicFunc import departComplex
-from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier, IFFTLength
+from GlobalParameter import OFDMCarrierCount, IFFTLength
 
-ofdmSymbolCount = SymbolPerCarrier
 ofdmSymbolCarrierCount = OFDMCarrierCount
 
 
@@ -22,7 +21,7 @@ ofdmSymbolCarrierCount = OFDMCarrierCount
 # #
 def ifftComplexSignal(info):
     # info输入时为调制完的16QAM符号流，为一个行向量
-    complexArray = np.array(info).reshape(ofdmSymbolCount, ofdmSymbolCarrierCount)
+    complexArray = np.array(info).reshape(-1, ofdmSymbolCarrierCount)
     # 转为array，分组，分为符SymbolPerCarrier个OFDM符号，
     # OFDMCarrierCount个子载波叠加为一个OFDM符号。
 
@@ -38,9 +37,9 @@ def ifftComplexSignal(info):
 
     # 调制每一个符号
     complexArray_IFFT = np.fft.ifft(complexArray, IFFTLength)  # 对每一行进行ifft，长度是IFFTLength，每一行得到一个调制符号
-    complexArray_IFFT_Real, complexArray_IFFT_Imag = departComplex(complexArray_IFFT)  # 分离实部和虚部
+    # complexArray_IFFT_Real, complexArray_IFFT_Imag = departComplex(complexArray_IFFT)  # 分离实部和虚部
 
-    return complexArray_IFFT, complexArray_IFFT_Real, complexArray_IFFT_Imag
+    return complexArray_IFFT
 
 
 # #
@@ -48,7 +47,7 @@ def ifftComplexSignal(info):
 # #
 if __name__ == "__main__":
     bits = np.random.randint(0, 2, 40)
-    testArray = bits.reshape((4,10))
+    testArray = bits.reshape((4, 10))
     testArray_IFFT = np.fft.ifft(testArray, 16)
     testArray_IFFT2 = np.zeros_like(testArray_IFFT, complex)
 

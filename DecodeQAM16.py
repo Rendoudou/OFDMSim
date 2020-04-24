@@ -6,7 +6,7 @@
 
 from GlobalParameter import mapping
 import numpy as np
-from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier
+from GlobalParameter import OFDMCarrierCount
 
 
 # #
@@ -37,14 +37,15 @@ def toBits(x):
 # @ return 解调后信息阵列
 # #
 def DecodeQAM16(signal_real, signal_imag):
-    signal_real_temp = signal_real[0: SymbolPerCarrier, 0: OFDMCarrierCount].ravel()
-    signal_imag_temp = signal_imag[0: SymbolPerCarrier, 0: OFDMCarrierCount].ravel()
+    ofdmNumber = signal_real.shape[0]
+    signal_real_temp = signal_real[0: ofdmNumber, 0: OFDMCarrierCount].ravel()
+    signal_imag_temp = signal_imag[0: ofdmNumber, 0: OFDMCarrierCount].ravel()
 
     if signal_real_temp.shape != signal_imag_temp.shape:
         print("OFDM仿真 ： error")
         return None
 
-    length = OFDMCarrierCount * SymbolPerCarrier
+    length = OFDMCarrierCount * ofdmNumber
     if length != signal_real_temp.shape[0]:
         print("OFDM仿真 ： error")
         return None

@@ -6,7 +6,7 @@
 
 import numpy as np
 from BasicFunc import departComplex
-from GlobalParameter import IFFTLength, OFDMCarrierCount, SymbolPerCarrier
+from GlobalParameter import IFFTLength, OFDMCarrierCount
 
 FFTLength = IFFTLength
 
@@ -19,15 +19,8 @@ FFTLength = IFFTLength
 # #
 def fftSignalWN(signal):
     fftOutTemp = np.fft.fft(signal, FFTLength)
-    fftOut = fftOutTemp[0:SymbolPerCarrier, 0:OFDMCarrierCount]  # 得到原始数据部分，除去为快速傅里叶变化添加的0
-    # realTemp = np.zeros(signal.shape[0])
-    # imagTemp = np.zeros(signal.shape[0])
-    #
-    # for i in range(fftOut.shape[0]):
-    #     realTemp[i] = fftOut[i].real
-    #     imagTemp[i] = fftOut[i].imag
-
-    realTemp, imagTemp = departComplex(fftOut)
+    fftOut = fftOutTemp[0:signal.shape[0], 0:OFDMCarrierCount]  # 得到原始数据部分，除去为快速傅里叶变化添加的0
+    realTemp, imagTemp = departComplex(fftOut)  # 分离实部和虚部
 
     return fftOut, realTemp, imagTemp
 
@@ -37,6 +30,9 @@ def fftSignalWN(signal):
 # #
 if __name__ == "__main__":
 
+    """
+    验证numpy.fft.ifft(),输入为数组时的函数执行情况
+    """
     a = np.arange(9)
     b = a.reshape((3, 3))
     b_fft = np.fft.fft(b)

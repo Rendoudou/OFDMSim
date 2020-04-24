@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 from tqdm import tqdm
-
 from GlobalParameter import SNRStart, SNREnd, SNRPath, SNRDis, ErrorPerSNR, SymbolPerRound
 from PrimaryProcess import primaryProcess
 
@@ -22,7 +21,7 @@ if __name__ == "__main__":
         snr = i * SNRPath
         tempTestSymbolSum = 0
         tempErrorSum = 0
-        while tempErrorSum < ErrorPerSNR:
+        while tempErrorSum < ErrorPerSNR:  # 最低误码基数限制
             tempErrorCount = primaryProcess(snr)  # 仿真过程
             tempErrorSum = tempErrorSum + tempErrorCount
             tempTestSymbolSum = tempTestSymbolSum + SymbolPerRound
@@ -35,7 +34,6 @@ if __name__ == "__main__":
 
     plt.subplot(111)
     plt.semilogy(np.arange(SNRStart, SNREnd) * SNRPath, ErrorRatioBar)  # y轴使用科学计数法
-    # ax.set_xlim([0, 25])
     plt.xlabel("SNR/dB")
     plt.ylabel("BER")
     plt.title("OFDMSimulate with CP")

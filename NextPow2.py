@@ -2,6 +2,7 @@
 @ OFDM仿真
 @ 找到下一个2的阶乘
 @ DD
+@ 参考博客 https://blog.csdn.net/chezhai/article/details/53190085
 """
 import ctypes as ct
 

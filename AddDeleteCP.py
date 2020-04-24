@@ -15,8 +15,9 @@ import numpy as np
 # @ return 添加结果
 # #
 def addCP(signal):
-    tempSignal = np.zeros((SymbolPerCarrier, int(IFFTLength + GI + GIP)), complex)  # 生成复数空数组
-    for i in range(SymbolPerCarrier):
+    ofdmNumber = signal.shape[0]
+    tempSignal = np.zeros((ofdmNumber, int(IFFTLength + GI + GIP)), complex)  # 生成复数空数组
+    for i in range(ofdmNumber):
         for j in range(IFFTLength):  # 当傅里叶变换长度为512
             tempSignal[i, j + GI] = \
                 signal[i, j]  # 第129 - 第640 用第1 - 第512个数据装填 0 - 511
@@ -41,8 +42,9 @@ def addCP(signal):
 # @ return 删除结果
 # #
 def deleteCP(signal):
-    temp = np.zeros((SymbolPerCarrier, IFFTLength)).astype(complex)
-    for i in range(SymbolPerCarrier):
+    ofdmNumber = signal.shape[0]
+    temp = np.zeros((ofdmNumber, IFFTLength)).astype(complex)
+    for i in range(ofdmNumber):
         temp[i] = signal[i, GI: GI + IFFTLength]  # 128 - 640 第 129 到 641,128 : 640
 
     return temp
@@ -53,5 +55,5 @@ def deleteCP(signal):
 # #
 if __name__ == "__main__":
     a = np.zeros((3, 4))
-    print(a[1, 1:3])
+    print(a.shape[0])
     pass
