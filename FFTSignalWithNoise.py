@@ -20,9 +20,9 @@ FFTLength = IFFTLength
 def fftSignalWN(signal):
     fftOutTemp = np.fft.fft(signal, FFTLength)
     fftOut = fftOutTemp[0:signal.shape[0], 0:OFDMCarrierCount]  # 得到原始数据部分，除去为快速傅里叶变化添加的0
-    realTemp, imagTemp = departComplex(fftOut)  # 分离实部和虚部
+    # realTemp, imagTemp = departComplex(fftOut)  # 分离实部和虚部
 
-    return fftOut, realTemp, imagTemp
+    return fftOut
 
 
 # #

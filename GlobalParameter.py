@@ -7,25 +7,30 @@ from NextPow2 import nextPow2
 
 DEBUG = False  # 全局调试变量
 
-# initial set up
+# initial set up 初始设置
 OFDMCarrierCount = 120  # 每个OFDM信号所携带的载波数目设置
 PilotInterval = 3 # 三个符号插入一个导频，块状导频
 SymbolPerCarrier = PilotInterval * 4  # 每一个载波设置的符号数目，一帧要发送的ofdm符号数目
 SymbolPerCarrier_Pilots = (PilotInterval + 1) * int(SymbolPerCarrier / PilotInterval)  # 添加导频后，一帧发送的ofdm符号变多
 BitsPerSymbol = 4  # 每一个符号所带的信息量，4比特，默认用16QAM
-#IFFTLength = 512  # IFFT长度
+                    # IFFTLength = 512  # IFFT长度
 IFFTLength = pow(2,nextPow2(OFDMCarrierCount) + 1)
 PrefixRatio = 1 / 4  # 保护间隔与OFDM数据的比例 1/6~1/4
 beta = 1 / 32  # 窗函数滚降系数
 GI = int(PrefixRatio * IFFTLength)  # 每一个OFDM符号添加的循环前缀长度为1/4*IFFT_bin_length  即保护间隔长度为128
 GIP = int(beta * (IFFTLength + GI))  # 循环后缀的长度20
-SymbolLength = IFFTLength + GI + GIP
-TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)  # 发送OFDM符号的实际长度
+SymbolLength = IFFTLength + GI + GIP  # 发送OFDM符号的实际长度
+TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)  # 发送OFDM符号帧的实际长度
 TxLength_Pilots = SymbolPerCarrier_Pilots * (IFFTLength + GI + GIP)  # 加入导频后发送同量信息的的长度
-# calc type
+
+# 线性回归,机器学习
+TrainingStep = 0.001  # 学习步长
+MaxTrainingCycles = 500  # 梯度上升训练限制
+
+# calc type 计算错误率的类型
 CalcBitsError = True  # 是否计算误比特率
 
-# sim set up
+# sim set up 仿真设置
 SNRStart = -100
 SNREnd = 150
 SNRPath = 0.1

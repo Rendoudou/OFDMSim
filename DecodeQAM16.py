@@ -36,10 +36,10 @@ def toBits(x):
 # @ para 从高斯信道中接收的信号经过FFT
 # @ return 解调后信息阵列
 # #
-def DecodeQAM16(signal_real, signal_imag):
-    ofdmNumber = signal_real.shape[0]
-    signal_real_temp = signal_real[0: ofdmNumber, 0: OFDMCarrierCount].ravel()
-    signal_imag_temp = signal_imag[0: ofdmNumber, 0: OFDMCarrierCount].ravel()
+def DecodeQAM16(signal):
+    ofdmNumber = signal.shape[0]  # 一帧的符号数目
+    signal_real_temp = signal.real.ravel()
+    signal_imag_temp = signal.imag.ravel()
 
     if signal_real_temp.shape != signal_imag_temp.shape:
         print("OFDM仿真 ： error")

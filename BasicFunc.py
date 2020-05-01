@@ -15,9 +15,12 @@ from GlobalParameter import TxLength
 # @ para 输入复数的信息：列表
 # @ return ifft后的复数符号，实部，虚部
 # #
-def plotSignalScatter(a, b, pos):
+def plotSignalScatter(symbol, pos):
+    symbolIn = np.array(symbol)
+    symbol_r = symbolIn.real
+    symbol_i = symbolIn.imag
     plt.figure(int(pos))
-    plt.scatter(a, b)  # 实部 虚部 画星座图 a array 从0到n-1
+    plt.scatter(symbol_r, symbol_i)  # 实部 虚部 画星座图 a array 从0到n-1
     plt.title(f'plot img {pos}')
 
     pass
@@ -88,7 +91,7 @@ def processBar(percent, start_str='', end_str='', total_length=0):
 # @ return 变换后信号
 # #
 def beLine(signal):
-    return signal.reshape((1,))
+    return signal.reshape((1,-1))
 
 
 # #

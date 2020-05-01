@@ -51,9 +51,9 @@ def qam16(bits):
     #     complexListReal_array[i] = complexList[i].real
     #     complexListImg_array[i] = complexList[i].imag
 
-    complexListReal_array, complexListImg_array = departComplex(np.array(complexList))  # 分离实部和虚部
+    # complexListReal_array, complexListImg_array = departComplex(np.array(complexList))  # 分离实部和虚部
 
-    return complexList, complexListReal_array, complexListImg_array, numberList
+    return complexList, numberList
 
 
 # #

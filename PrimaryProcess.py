@@ -1,5 +1,5 @@
 """
-@ OFDM仿真，未完全加入机器学习
+@ OFDM仿真，加入线性回归，学习X&Y轴，修正接收信号。
 @ 主函数文件
 @ DD
 """
@@ -18,6 +18,7 @@ from DecodeQAM16 import DecodeQAM16
 from Anlysis import calcMismatchRatio
 from AddDeleteCP import addCP, deleteCP
 from Pilot import insertPilot
+from MachineLearning import trainAxis
 
 # 文件内调试用参数
 PrimaryProcessDebug = False
@@ -43,20 +44,20 @@ def primaryProcess(snr):
     """
     经过16QAM调制
     """
-    qamSignal, qamSignal_r, qamSignal_i, numberOrigin = qam16(originalBits)
+    qam, numberOrigin = qam16(originalBits)
     if PrimaryProcessDebug:
-        plotSignalScatter(qamSignal_r, qamSignal_i, 1)
+        plotSignalScatter(qam, 1)
 
     """
-    插入导频,另一组信号插入了导频
+        插入导频,另一组信号插入了导频
     """
-    qamSignal_p = insertPilot(qamSignal)
+    qam_p = insertPilot(qam)
 
     """
     IFFT 快速傅里叶逆变换，实现多载波信号快速调制产生结果
     """
-    ofdmSignal = ifftComplexSignal(qamSignal)
-    ofdmSignal_p = ifftComplexSignal(qamSignal_p)
+    ofdmSignal = ifftComplexSignal(qam)
+    ofdmSignal_p = ifftComplexSignal(qam_p)
 
     """
     加循环前缀,和循环后缀
@@ -65,13 +66,13 @@ def primaryProcess(snr):
     ofdm_p_cp = addCP(ofdmSignal_p)
 
     """
-    并串转换
+    并串转换,信道传输
     """
     infoTx = ofdm_cp.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
     info_pTx = ofdm_p_cp.ravel()
 
     """
-    信号加噪声后  进入高斯信道。此处是分为两路，再分开加噪声。合理吗？ 
+    信号加噪声后  进入高斯信道。此处是分为两路，再分开加噪声。 
     """
     infoRx = AWGNComplex2(infoTx, snr)
     info_pRx = AWGNComplex2(info_pTx, snr)
@@ -83,24 +84,38 @@ def primaryProcess(snr):
     """
     串并转换
     """
-    complexArrayRx = infoRx.reshape((-1, SymbolLength))  # 转换为更易理解的矩阵
+    ofdm_cp_awgn = infoRx.reshape((-1, SymbolLength))  # 转换为更易理解的矩阵
+    ofdm_cp_p_awgn = info_pRx.reshape((-1, SymbolLength))
 
     """
     去循环前缀和循环后缀
     """
-    complexArrayUsePart = deleteCP(complexArrayRx)  # 去多余
+    ofdm_awgn = deleteCP(ofdm_cp_awgn)  # 去多余
+    ofdm_p_awgn = deleteCP(ofdm_cp_p_awgn)
+
 
     """
     FFT 快速傅里叶变换
     """
-    complexArrayFFTOut, complexArrayFFTOut_Real, complexArrayFFTOut_Imag = fftSignalWN(complexArrayUsePart)
+    qam_awgn = fftSignalWN(ofdm_awgn)
+    qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
-        plotSignalScatter(complexArrayFFTOut_Real, complexArrayFFTOut_Imag, 2)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_awgn, 2)  # 接收后FFT画图，加噪声后 16QAM
+
+    """
+        基于导频训练分界线
+    """
+    weights_x, weights_y = trainAxis(qam_p_awgn)
+
+    """
+        基于分界线做出修正
+    """
 
     """
     解调
     """
-    outBits, outNumber = DecodeQAM16(complexArrayFFTOut_Real, complexArrayFFTOut_Imag)
+    outBits, outNumber = DecodeQAM16(qam_awgn)
+
 
     """
     误比特率或者误码率
@@ -125,7 +140,7 @@ def primaryProcess(snr):
 # #
 if __name__ == "__main__":
 
-    PrimaryProcessDebug = True
-    primaryProcess(15)
+    # PrimaryProcessDebug = True
+    primaryProcess(8)
 
     pass

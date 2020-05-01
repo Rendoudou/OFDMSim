@@ -15,7 +15,7 @@ import numpy as np
 # @ return 添加结果
 # #
 def addCP(signal):
-    ofdmNumber = signal.shape[0]
+    ofdmNumber = signal.shape[0]  # 行数，获得ofdm符号的个数
     tempSignal = np.zeros((ofdmNumber, int(IFFTLength + GI + GIP)), complex)  # 生成复数空数组
     for i in range(ofdmNumber):
         for j in range(IFFTLength):  # 当傅里叶变换长度为512
@@ -42,7 +42,7 @@ def addCP(signal):
 # @ return 删除结果
 # #
 def deleteCP(signal):
-    ofdmNumber = signal.shape[0]
+    ofdmNumber = signal.shape[0]  # 行数，ofdm符号的个数
     temp = np.zeros((ofdmNumber, IFFTLength)).astype(complex)
     for i in range(ofdmNumber):
         temp[i] = signal[i, GI: GI + IFFTLength]  # 128 - 640 第 129 到 641,128 : 640
