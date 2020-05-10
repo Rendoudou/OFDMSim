@@ -12,53 +12,67 @@
 """
 
 import numpy as np
-from numpy import sqrt, pi, cos
+import matplotlib.pyplot as plt
+from numpy import sqrt, pi, cos, sin
+from GlobalParameter import Fd
+from NextPow2 import nextPow2
 
 
-def rayleigh(fd, t):
+#
+# 创建瑞利信道
+#
+def rayleigh(M, fd, t):
     """
-    # %改进的jakes模型来产生单径的平坦型瑞利衰落信道
-    # %Yahong R.Zheng and Chengshan Xiao "Improved Models for
-    # %the Generation of Multiple Uncorrelated Rayleigh Fading Waveforms"
-    # %IEEE Commu letters, Vol.6, NO.6, JUNE 2002
-    # %输入变量说明：
-    # %  fd：信道的最大多普勒频移 单位Hz
-    # %  t :信号的抽样时间序列，抽样间隔单位s
-    # %  h为输出的瑞利信道函数，是一个时间函数复序列
+    :param M: M为正弦波数
+    :param fd: fd为最大多普勒频移
+    :param t: t为时间序列
+    :return: h为信道的时域表现
     """
-    # 假设的入射波数目
-    N = 40
-    wm = 2 * pi * fd
-    # 每象限的入射波数目即振荡器数目
-    N0 = N / 4
-    # 信道函数的实部
-    Tc = np.zeros((1, len(t)))
-    # 信道函数的虚部
-    Ts = np.zeros((1, len(t)))
-    # 归一化功率系数
-    P_nor = sqrt(1 / N0)
-    # 区别个条路径的均匀分布随机相位
-
-    alfa = np.zeros((1, N0), float)
-    for ii in np.arange(N0):  # 1:N0
-        # 对每个子载波而言在(-pi,pi)之间均匀分布的随机相位
-        fi_tc = 2 * pi * np.random.rand(1, 1) - pi
-        fi_ts = 2 * pi * np.random.rand(1, 1) - pi
-        # 第i条入射波的入射角
-        theta = 2 * pi * np.random.rand(1, 1) - pi
-        alfa[ii] = (2 * pi * ii - pi + theta) / N
-        # 计算冲激响应函数
-        Tc = Tc + cos(np.cos(alfa[ii]) * wm * t + fi_tc)
-        Ts = Ts + cos(np.sin(alfa[ii]) * wm * t + fi_ts)
+    wd = 2 * pi * fd
+    zc = np.zeros((1, len(t)))
+    zs = np.zeros((1, len(t)))
+    P_nor = sqrt(1 / M)
+    # 引入的随机频移和变量
+    alpha = np.zeros(M, float)
+    for ii in np.arange(M):
+        phi = 2 * pi * np.random.rand() - pi
+        psi = 2 * pi * np.random.rand() - pi
+        theta = 2 * pi * np.random.rand() - pi
+        alpha[ii] = (2 * pi * ii - pi + theta) / 4 / M
+        zc = zc + cos(cos(alpha[ii]) * wd * t + phi)
+        zs = zs + cos(sin(alpha[ii]) * wd * t + psi)
         pass
-    # 乘归一化功率系数得到传输函数
-    h = P_nor * (Tc + 1j * Ts)
-
+    h = P_nor * (zc + 1j * zs)
     return h
 
 
-if __name__ == "__main__":
-    t = np.arange(0,1,0.0001)
-    chan = rayleigh(100, t)
+#
+# 画出频谱
+#
+def plotHW(h):
+    """
+    :param h: 信道时域表现
+    :return: 画出频谱
+    """
+    h_re = h.ravel()
+    # n = pow(2,nextPow2(len(h_re))+1)
+    # hw = np.fft.fft(h_re,n)
+    # HW = abs(hw)
+    # w = np.arange(n)/n*2*pi
+    plt.figure()
+    plt.subplot(111)
+    plt.plot(10 * np.log10(abs(h_re)))
+    plt.axis([0, 5000, -7, 10])
+    plt.xlabel('w')
+    plt.ylabel('Hw/dB')
+    plt.show()
+    pass
 
+#
+# debug
+#
+if __name__ == "__main__":
+    # t = np.arange(0, 5, 0.00001)
+    # chan = rayleigh(120, 100, t)
+    # plotHW(chan)
     pass

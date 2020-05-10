@@ -23,6 +23,9 @@ SymbolLength = IFFTLength + GI + GIP  # 发送OFDM符号的实际长度
 TxLength = SymbolPerCarrier * (IFFTLength + GI + GIP)  # 发送OFDM符号帧的实际长度
 TxLength_Pilots = SymbolPerCarrier_Pilots * (IFFTLength + GI + GIP)  # 加入导频后发送同量信息的的长度
 
+# 瑞利信道
+Fd = 100  # HZ 最大多普勒频移
+
 # 线性回归,机器学习
 TrainingStep = 0.001  # 学习步长
 MaxTrainingCycles = 500  # 梯度上升训练限制

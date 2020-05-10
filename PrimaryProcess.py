@@ -8,17 +8,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from GlobalParameter import SymbolLength
-from BasicFunc import plotSignalScatter, getComplexSignalPower
-from GenerateBits import generateBits
-from QAM16 import qam16
-from IFFTComplexSignal import ifftComplexSignal
-from AddWGN import AWGNComplex2
-from FFTSignalWithNoise import fftSignalWN
-from DecodeQAM16 import DecodeQAM16
-from Anlysis import calcMismatchRatio
-from AddDeleteCP import addCP, deleteCP
-from Pilot import insertPilot
-from MachineLearning import trainAxis
+from BasicFunc import plotSignalScatter, getComplexSignalPower # 画出星座图，获得信号功率
+
+from GenerateBits import generateBits               # 产生源数据
+from QAM16 import qam16                             # 16QAM调制
+from Pilot import insertPilot                       # 插入导频
+from IFFTComplexSignal import ifftComplexSignal     # 调制为ofdm符号
+from AddDeleteCP import addCP                       # 加入循环前缀
+                                                    # 并串转换
+from ChannelConv import ofdmConvChannelH            # 2-tap channel
+from AddWGN import AWGNComplex2                     # 加入高斯噪声
+from ChannelConv import ConvLength                  # 串并转换,经过信道后，符号长度变化
+from ChannelEstimationH import weakenChannelInterf  # 简易信道估计，去部分信道影响
+from FFTSignalWithNoise import fftSignalWN          # 解调ofdm信号
+from AddDeleteCP import deleteCP                    # 去循环前缀
+from MachineLearning import trainAxis               # 机器学习，线性回归计算畸变横纵坐标
+from DecodeQAM16 import DecodeQAM16                 # 解码16QAM
+from Anlysis import calcMismatchRatio               # 计算误码率
+
 
 # 文件内调试用参数
 PrimaryProcessDebug = False
@@ -56,51 +63,61 @@ def primaryProcess(snr):
     """
     IFFT 快速傅里叶逆变换，实现多载波信号快速调制产生结果
     """
-    ofdmSignal = ifftComplexSignal(qam)
+    # ofdmSignal = ifftComplexSignal(qam)
     ofdmSignal_p = ifftComplexSignal(qam_p)
 
     """
     加循环前缀,和循环后缀
     """
-    ofdm_cp = addCP(ofdmSignal)  # 加入循环前缀和循环后缀 数据规模（symbolPerCarrier * (carriers + GI + GIP)）
+    # ofdm_cp = addCP(ofdmSignal)  # 加入循环前缀和循环后缀 数据规模（symbolPerCarrier * (carriers + GI + GIP)）
     ofdm_p_cp = addCP(ofdmSignal_p)
 
     """
     并串转换,信道传输
     """
-    infoTx = ofdm_cp.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
+    # infoTx = ofdm_cp.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
     info_pTx = ofdm_p_cp.ravel()
 
     """
-    信号加噪声后  进入高斯信道。此处是分为两路，再分开加噪声。 
+    经过 2-tap 信道
     """
-    infoRx = AWGNComplex2(infoTx, snr)
-    info_pRx = AWGNComplex2(info_pTx, snr)
+    # infoTx_ch = ofdmConvChannelH(infoTx)
+    info_pTx_ch = ofdmConvChannelH(info_pTx)
+
+    """
+    信号经过信道，加噪声。此处是分为两路，再分开加噪声。 
+    """
+    # infoRx = AWGNComplex2(infoTx_ch, snr)
+    info_pRx = AWGNComplex2(info_pTx_ch, snr)
     if PrimaryProcessDebug:
-        Ps = getComplexSignalPower(infoTx)
-        Pn = getComplexSignalPower(infoRx - infoTx)
+        Ps = getComplexSignalPower(info_pTx)
+        Pn = getComplexSignalPower(info_pRx - info_pTx)
         snrOut = 10 * np.log10(Ps / Pn)
 
     """
     串并转换
     """
-    ofdm_cp_awgn = infoRx.reshape((-1, SymbolLength))  # 转换为更易理解的矩阵
-    ofdm_cp_p_awgn = info_pRx.reshape((-1, SymbolLength))
+    # ofdm_cp_awgn = infoRx.reshape((-1, ConvLength))  # 转换为更易理解的矩阵
+    ofdm_p_cp_awgn = info_pRx.reshape((-1, ConvLength))
+
+    """
+    简易信道估计
+    """
+    weakenChannelInterf(ofdm_p_cp_awgn, ofdm_p_cp)
 
     """
     去循环前缀和循环后缀
     """
-    ofdm_awgn = deleteCP(ofdm_cp_awgn)  # 去多余
-    ofdm_p_awgn = deleteCP(ofdm_cp_p_awgn)
-
+    # ofdm_awgn = deleteCP(ofdm_cp_awgn)  # 去多余
+    ofdm_p_awgn = deleteCP(ofdm_p_cp_awgn)
 
     """
     FFT 快速傅里叶变换
     """
-    qam_awgn = fftSignalWN(ofdm_awgn)
+    # qam_awgn = fftSignalWN(ofdm_awgn)
     qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_awgn, 2)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_p_awgn, 2)  # 接收后FFT画图，加噪声后 16QAM
 
     """
         基于导频训练分界线
@@ -114,33 +131,31 @@ def primaryProcess(snr):
     """
     解调
     """
-    outBits, outNumber = DecodeQAM16(qam_awgn)
-
+    # outBits, outNumber = DecodeQAM16(qam_awgn)
 
     """
     误比特率或者误码率
     """
-    [errorRatio, errorCount] = calcMismatchRatio(originalBits, np.array(outBits))
+    # [errorRatio, errorCount] = calcMismatchRatio(originalBits, np.array(outBits))
 
     """
     计算和显示重要信息,when debug
     """
-    if PrimaryProcessDebug:
-        snrPr = format(snr, '.3f')
-        snr_outPr = format(snrOut, '.3f')
-        correctRatioPr = format(100 - errorRatio * 100, '.4f')
-        print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
-        plt.show()
-
-    return errorCount
+    # if PrimaryProcessDebug:
+    #     snrPr = format(snr, '.3f')
+    #     snr_outPr = format(snrOut, '.3f')
+    #     correctRatioPr = format(100 - errorRatio * 100, '.4f')
+    #     print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
+    #     plt.show()
+    #
+    # return errorCount
+    return 0
 
 
 # #
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-
     # PrimaryProcessDebug = True
     primaryProcess(8)
-
     pass

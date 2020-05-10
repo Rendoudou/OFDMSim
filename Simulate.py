@@ -31,7 +31,6 @@ if __name__ == "__main__":
         # processBar((i + 100) / 350, start_str='', end_str='100%', total_length=15)
 
     plt.figure(figsize=(8, 6))
-
     plt.subplot(111)
     plt.semilogy(np.arange(SNRStart, SNREnd) * SNRPath, ErrorRatioBar)  # y轴使用科学计数法
     plt.xlabel("SNR/dB")
