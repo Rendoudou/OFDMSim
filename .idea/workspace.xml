@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="071c557d-c7f0-4013-8289-6c6895731f03" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ChannelConv.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChannelEstimationH.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalParameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalParameter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddDeleteCP.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDeleteCP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChannelConv.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChannelConv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChannelEstimationH.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChannelEstimationH.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimaryProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimaryProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RayleighChannel.py" beforeDir="false" afterPath="$PROJECT_DIR$/RayleighChannel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Simulate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Simulate.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,38 +186,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584288667480" />
-    <state width="1899" height="259" key="GridCell.Tab.0.bottom" timestamp="1589117316299">
+    <state width="1899" height="259" key="GridCell.Tab.0.bottom" timestamp="1589793931351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316299" />
-    <state width="1899" height="259" key="GridCell.Tab.0.center" timestamp="1589117316299">
+    <state width="1899" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
+    <state width="1899" height="259" key="GridCell.Tab.0.center" timestamp="1589793931351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316299" />
-    <state width="1899" height="259" key="GridCell.Tab.0.left" timestamp="1589117316298">
+    <state width="1899" height="259" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
+    <state width="1899" height="259" key="GridCell.Tab.0.left" timestamp="1589793931351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316298" />
-    <state width="1899" height="259" key="GridCell.Tab.0.right" timestamp="1589117316299">
+    <state width="1899" height="259" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
+    <state width="1899" height="259" key="GridCell.Tab.0.right" timestamp="1589793931351">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316299" />
-    <state width="1899" height="284" key="GridCell.Tab.1.bottom" timestamp="1589117316294">
+    <state width="1899" height="259" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
+    <state width="1899" height="397" key="GridCell.Tab.1.bottom" timestamp="1589793931346">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316294" />
-    <state width="1899" height="284" key="GridCell.Tab.1.center" timestamp="1589117316294">
+    <state width="1899" height="397" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931346" />
+    <state width="1899" height="397" key="GridCell.Tab.1.center" timestamp="1589793931345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316294" />
-    <state width="1899" height="284" key="GridCell.Tab.1.left" timestamp="1589117316294">
+    <state width="1899" height="397" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
+    <state width="1899" height="397" key="GridCell.Tab.1.left" timestamp="1589793931345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316294" />
-    <state width="1899" height="284" key="GridCell.Tab.1.right" timestamp="1589117316294">
+    <state width="1899" height="397" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
+    <state width="1899" height="397" key="GridCell.Tab.1.right" timestamp="1589793931345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589117316294" />
+    <state width="1899" height="397" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1583130470646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -228,10 +226,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1583339369975" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589119043727">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589782232047">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589119043727" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589782232047" />
     <state x="524" y="256" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1589116893953">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -240,10 +238,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="221" y="103" width="1498" height="858" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1589110289756" />
-    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1583245785047">
+    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1589790889143">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583245785047" />
+    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1589790889143" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -263,12 +261,12 @@
           <line>84</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PrimaryProcess.py</url>
-          <line>105</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="ofdm_cp" language="Python" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

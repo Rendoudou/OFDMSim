@@ -43,7 +43,7 @@ def addCP(signal):
 # #
 def deleteCP(signal):
     ofdmNumber = signal.shape[0]  # 行数，ofdm符号的个数
-    temp = np.zeros((ofdmNumber, IFFTLength)).astype(complex)
+    temp = np.zeros((ofdmNumber, IFFTLength),complex)
     for i in range(ofdmNumber):
         temp[i] = signal[i, GI: GI + IFFTLength]  # 128 - 640 第 129 到 641,128 : 640
 

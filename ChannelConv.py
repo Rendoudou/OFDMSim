@@ -6,6 +6,7 @@
 import numpy as np
 from GlobalParameter import SymbolLength  # 调制后发入信道的ofdm符号长度
 
+
 #
 # two-tap channel
 #
@@ -14,12 +15,17 @@ def getTwoTapChannel():
     :param: void
     :return: generates a (2-tap) channel
     """
-    h =np.array([np.random.rand() + 1j * np.random.rand() , (np.random.rand() + 1j * np.random.rand()) / 2])
-    return h
+    h_temp = np.array([np.random.rand() + 1j * np.random.rand(), (np.random.rand() + 1j * np.random.rand()) / 2])
+    return h_temp
 
-h = getTwoTapChannel()
-ConvLength = SymbolLength + len(h) - 1
+
+#
+# basic init
+#
+h_origin = getTwoTapChannel()
+ConvLength = SymbolLength + len(h_origin) - 1
 LenH = 2
+
 
 #
 # 信号卷积,输入的信号是经过ifft变换，串并转换的发射信号
@@ -34,18 +40,17 @@ def ofdmConvChannelH(ofdmStream):
     symbol_out = np.zeros((n, ConvLength), complex)
     if n > 0:
         for i in np.arange(n):
-            symbol_out[i] = np.convolve(symbol_reshape[i], h, mode='full')  # 正常卷积
+            symbol_out[i] = np.convolve(symbol_reshape[i], h_origin, mode='full')  # 正常卷积
             pass
         pass
     else:
         print("error, ofdmConvChannelH()")
         pass
-    return symbol_out.ravel() # 拉直，假设发射时不同符号之间时间间隔足够,变回发射在空中的状态。
+    return symbol_out.ravel()  # 拉直，假设发射时不同符号之间时间间隔足够,变回发射在空中的状态。
+
 
 #
 # debug
 #
 if "__main__" == __name__:
-
     pass
-

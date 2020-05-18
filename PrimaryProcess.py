@@ -88,22 +88,23 @@ def primaryProcess(snr):
     信号经过信道，加噪声。此处是分为两路，再分开加噪声。 
     """
     # infoRx = AWGNComplex2(infoTx_ch, snr)
-    info_pRx = AWGNComplex2(info_pTx_ch, snr)
+    # info_pRx_ch = AWGNComplex2(info_pTx_ch, snr)
+    info_pRx_ch = info_pTx_ch
     if PrimaryProcessDebug:
-        Ps = getComplexSignalPower(info_pTx)
-        Pn = getComplexSignalPower(info_pRx - info_pTx)
+        Ps = getComplexSignalPower(info_pTx_ch)
+        Pn = getComplexSignalPower(info_pRx_ch - info_pTx_ch)
         snrOut = 10 * np.log10(Ps / Pn)
 
     """
     串并转换
     """
     # ofdm_cp_awgn = infoRx.reshape((-1, ConvLength))  # 转换为更易理解的矩阵
-    ofdm_p_cp_awgn = info_pRx.reshape((-1, ConvLength))
+    ofdm_p_cp_ch_awgn = info_pRx_ch.reshape((-1, ConvLength))  # 卷积后的长度
 
     """
-    简易信道估计
+    简易信道估计,消除信道影响
     """
-    weakenChannelInterf(ofdm_p_cp_awgn, ofdm_p_cp)
+    ofdm_p_cp_awgn = weakenChannelInterf(ofdm_p_cp_ch_awgn, ofdm_p_cp)
 
     """
     去循环前缀和循环后缀
@@ -127,7 +128,6 @@ def primaryProcess(snr):
     """
         基于分界线做出修正
     """
-
     """
     解调
     """
