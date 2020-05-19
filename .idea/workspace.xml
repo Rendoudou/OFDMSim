@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="071c557d-c7f0-4013-8289-6c6895731f03" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Rectify.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddDeleteCP.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDeleteCP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChannelConv.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChannelConv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChannelEstimationH.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChannelEstimationH.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecodeQAM16.py" beforeDir="false" afterPath="$PROJECT_DIR$/DecodeQAM16.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalParameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalParameter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MachineLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/MachineLearning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PrimaryProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/PrimaryProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simulate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Simulate.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +39,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../pythonProj" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.PrimaryProcess (1)">
+  <component name="RunManager" selected="Python.Simulate">
     <configuration name="ChannelEstimationH" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="OFDMSimulate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -58,7 +61,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="MachineLearning" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="DecodeQAM16" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="OFDMSimulate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -70,28 +73,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MachineLearning.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Pilot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="OFDMSimulate" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pilot.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DecodeQAM16.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,7 +103,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="RayleighChannel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Rectify" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="OFDMSimulate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -133,7 +115,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RayleighChannel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Rectify.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Simulate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="OFDMSimulate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Simulate.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -144,11 +147,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Simulate" />
+        <item itemvalue="Python.Rectify" />
         <item itemvalue="Python.PrimaryProcess (1)" />
+        <item itemvalue="Python.DecodeQAM16" />
         <item itemvalue="Python.ChannelEstimationH" />
-        <item itemvalue="Python.RayleighChannel" />
-        <item itemvalue="Python.MachineLearning" />
-        <item itemvalue="Python.Pilot" />
       </list>
     </recent_temporary>
   </component>
@@ -186,38 +189,46 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584288667480" />
-    <state width="1899" height="259" key="GridCell.Tab.0.bottom" timestamp="1589793931351">
+    <state width="1899" height="299" key="GridCell.Tab.0.bottom" timestamp="1589896687592">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
-    <state width="1899" height="259" key="GridCell.Tab.0.center" timestamp="1589793931351">
+    <state width="1899" height="299" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896687592" />
+    <state width="1899" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589801328194" />
+    <state width="1899" height="299" key="GridCell.Tab.0.center" timestamp="1589896687592">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
-    <state width="1899" height="259" key="GridCell.Tab.0.left" timestamp="1589793931351">
+    <state width="1899" height="299" key="GridCell.Tab.0.center/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896687592" />
+    <state width="1899" height="300" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589801328194" />
+    <state width="1899" height="299" key="GridCell.Tab.0.left" timestamp="1589896687592">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
-    <state width="1899" height="259" key="GridCell.Tab.0.right" timestamp="1589793931351">
+    <state width="1899" height="299" key="GridCell.Tab.0.left/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896687592" />
+    <state width="1899" height="300" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589801328194" />
+    <state width="1899" height="299" key="GridCell.Tab.0.right" timestamp="1589896687592">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="259" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931351" />
-    <state width="1899" height="397" key="GridCell.Tab.1.bottom" timestamp="1589793931346">
+    <state width="1899" height="299" key="GridCell.Tab.0.right/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896687592" />
+    <state width="1899" height="300" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589801328194" />
+    <state width="1899" height="486" key="GridCell.Tab.1.bottom" timestamp="1589896686951">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="397" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931346" />
-    <state width="1899" height="397" key="GridCell.Tab.1.center" timestamp="1589793931345">
+    <state width="1899" height="486" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896686951" />
+    <state width="1899" height="304" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1589800825890" />
+    <state width="1899" height="486" key="GridCell.Tab.1.center" timestamp="1589896686951">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="397" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
-    <state width="1899" height="397" key="GridCell.Tab.1.left" timestamp="1589793931345">
+    <state width="1899" height="486" key="GridCell.Tab.1.center/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896686951" />
+    <state width="1899" height="304" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1589800825890" />
+    <state width="1899" height="486" key="GridCell.Tab.1.left" timestamp="1589896686951">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="397" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
-    <state width="1899" height="397" key="GridCell.Tab.1.right" timestamp="1589793931345">
+    <state width="1899" height="486" key="GridCell.Tab.1.left/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896686951" />
+    <state width="1899" height="304" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1589800825889" />
+    <state width="1899" height="486" key="GridCell.Tab.1.right" timestamp="1589896686951">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="397" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589793931345" />
+    <state width="1899" height="486" key="GridCell.Tab.1.right/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589896686951" />
+    <state width="1899" height="304" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1589800825890" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1583130470646">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -226,47 +237,44 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1583339369975" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589782232047">
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589889748122">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589782232047" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589889748122" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589796911702" />
     <state x="524" y="256" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1589116893953">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="524" y="256" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040@0.0.1920.1040" timestamp="1589116893953" />
+    <state x="-1447" y="0" width="1451" height="867" key="dock-window-1" timestamp="1589893757302">
+      <screen x="-1440" y="0" width="1440" height="860" />
+    </state>
+    <state x="-7" y="61" width="1454" height="699" key="dock-window-1/0.0.1440.860@0.0.1440.860" timestamp="1589883592788" />
+    <state x="-1447" y="0" width="1451" height="867" key="dock-window-1/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589893757302" />
     <state x="221" y="103" width="1498" height="858" key="find.popup" timestamp="1589110289756">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="221" y="103" width="1498" height="858" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1589110289756" />
-    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1589790889143">
+    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup" timestamp="1589874166620">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="780" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1440.0.1440.860@0.0.1920.1040" timestamp="1589874166620" />
     <state x="780" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1589790889143" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/DecodeQAM16.py</url>
-          <line>85</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/DecodeQAM16.py</url>
-          <line>55</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Pilot.py</url>
           <line>84</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Rectify.py</url>
+          <line>73</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="ofdm_cp" language="Python" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

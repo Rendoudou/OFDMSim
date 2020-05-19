@@ -3,11 +3,8 @@
 @ 主函数文件
 @ DD
 """
-
-import matplotlib.pyplot as plt
 import numpy as np
 
-from GlobalParameter import SymbolLength
 from BasicFunc import plotSignalScatter, getComplexSignalPower # 画出星座图，获得信号功率
 
 from GenerateBits import generateBits               # 产生源数据
@@ -23,6 +20,7 @@ from ChannelEstimationH import weakenChannelInterf  # 简易信道估计，去�
 from FFTSignalWithNoise import fftSignalWN          # 解调ofdm信号
 from AddDeleteCP import deleteCP                    # 去循环前缀
 from MachineLearning import trainAxis               # 机器学习，线性回归计算畸变横纵坐标
+from Rectify import rectify                         # 矫正坐标
 from DecodeQAM16 import DecodeQAM16                 # 解码16QAM
 from Anlysis import calcMismatchRatio               # 计算误码率
 
@@ -40,7 +38,6 @@ def primaryProcess(snr):
     :param snr: 输入信噪比
     :return: 误码率
     """
-
     global snrOut
 
     """
@@ -63,31 +60,26 @@ def primaryProcess(snr):
     """
     IFFT 快速傅里叶逆变换，实现多载波信号快速调制产生结果
     """
-    # ofdmSignal = ifftComplexSignal(qam)
     ofdmSignal_p = ifftComplexSignal(qam_p)
 
     """
     加循环前缀,和循环后缀
     """
-    # ofdm_cp = addCP(ofdmSignal)  # 加入循环前缀和循环后缀 数据规模（symbolPerCarrier * (carriers + GI + GIP)）
     ofdm_p_cp = addCP(ofdmSignal_p)
 
     """
     并串转换,信道传输
     """
-    # infoTx = ofdm_cp.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
-    info_pTx = ofdm_p_cp.ravel()
+    info_pTx = ofdm_p_cp.ravel()  # TxLength = symbolPerCarrier * (carriers + GI + GIP)
 
     """
     经过 2-tap 信道
     """
-    # infoTx_ch = ofdmConvChannelH(infoTx)
     info_pTx_ch = ofdmConvChannelH(info_pTx)
 
     """
     信号经过信道，加噪声。此处是分为两路，再分开加噪声。 
     """
-    # infoRx = AWGNComplex2(infoTx_ch, snr)
     # info_pRx_ch = AWGNComplex2(info_pTx_ch, snr)
     info_pRx_ch = info_pTx_ch
     if PrimaryProcessDebug:
@@ -98,7 +90,6 @@ def primaryProcess(snr):
     """
     串并转换
     """
-    # ofdm_cp_awgn = infoRx.reshape((-1, ConvLength))  # 转换为更易理解的矩阵
     ofdm_p_cp_ch_awgn = info_pRx_ch.reshape((-1, ConvLength))  # 卷积后的长度
 
     """
@@ -109,13 +100,11 @@ def primaryProcess(snr):
     """
     去循环前缀和循环后缀
     """
-    # ofdm_awgn = deleteCP(ofdm_cp_awgn)  # 去多余
     ofdm_p_awgn = deleteCP(ofdm_p_cp_awgn)
 
     """
     FFT 快速傅里叶变换
     """
-    # qam_awgn = fftSignalWN(ofdm_awgn)
     qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
         plotSignalScatter(qam_p_awgn, 2)  # 接收后FFT画图，加噪声后 16QAM
@@ -123,39 +112,45 @@ def primaryProcess(snr):
     """
         基于导频训练分界线
     """
-    weights_x, weights_y = trainAxis(qam_p_awgn)
+    weights_x, weights_y = trainAxis(qam_p_awgn)  # 整体坐标系产生的偏移
 
     """
         基于分界线做出修正
     """
+    qam_p_awgn_rec = rectify(qam_p_awgn, weights_x, weights_y)
+
     """
     解调
     """
-    # outBits, outNumber = DecodeQAM16(qam_awgn)
+    outBits, outNumber = DecodeQAM16(qam_p_awgn)  # 解码,输出部分去掉了导频。具体实现见函数
+    outBits_rec, outNumber_rec = DecodeQAM16(qam_p_awgn_rec)  # 解码,输出部分去掉了导频。具体实现见函数
 
     """
     误比特率或者误码率
     """
-    # [errorRatio, errorCount] = calcMismatchRatio(originalBits, np.array(outBits))
+    [errorRatio, errorCount] = calcMismatchRatio(originalBits, outBits)
+    [errorRatio_rec, errorCount_rec] = calcMismatchRatio(originalBits, outBits_rec)
 
     """
     计算和显示重要信息,when debug
     """
-    # if PrimaryProcessDebug:
-    #     snrPr = format(snr, '.3f')
-    #     snr_outPr = format(snrOut, '.3f')
-    #     correctRatioPr = format(100 - errorRatio * 100, '.4f')
-    #     print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %')
-    #     plt.show()
-    #
-    # return errorCount
-    return 0
+    if PrimaryProcessDebug:
+        snrPr = format(snr, '.3f')
+        snr_outPr = format(snrOut, '.3f')
+        correctRatioPr = format(100 - errorRatio * 100, '.4f')
+        correctRatioPr_rec = format(100 - errorRatio_rec * 100, '.4f')
+        print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %. '
+              f'rec correct Ratio : {correctRatioPr_rec} %.')
+        # plt.show()
+        pass
+
+    return errorCount, errorCount_rec
 
 
 # #
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-    # PrimaryProcessDebug = True
-    primaryProcess(8)
+    PrimaryProcessDebug = True
+    primaryProcess(5)
     pass

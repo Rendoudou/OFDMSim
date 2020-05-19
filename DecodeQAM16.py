@@ -4,9 +4,8 @@
 @ DD
 """
 
-from GlobalParameter import mapping
 import numpy as np
-from GlobalParameter import OFDMCarrierCount
+from GlobalParameter import mapping, OFDMCarrierCount, Group, PilotInterval
 
 
 # #
@@ -31,13 +30,27 @@ def toBits(x):
 
 
 # #
+# @ func: def getOfdmPosition()
+# #
+def getOfdmPosition():
+    pos = np.zeros(Group * PilotInterval, int)
+    for i in np.arange(Group):
+        for j in np.arange(PilotInterval):
+            pos[i * PilotInterval + j] = i * (PilotInterval + 1) + (j + 1)
+        pass
+    pass
+
+    return list(pos)
+
+
+# #
 # @ func: def DecodeQAM16(fftSignalStream)
 # @ 16QAM解调
 # @ para 从高斯信道中接收的信号经过FFT
 # @ return 解调后信息阵列
 # #
 def DecodeQAM16(signal):
-    ofdmNumber = signal.shape[0]  # 一帧的符号数目
+    ofdmNumber = signal.shape[0]  # 一帧的符号数目,加入导频后是16
     signal_real_temp = signal.real.ravel()
     signal_imag_temp = signal.imag.ravel()
 
@@ -50,9 +63,9 @@ def DecodeQAM16(signal):
         print("OFDM仿真 ： error")
         return None
 
-    symbol16QAM = np.zeros((length, 2))  # 用作存储解码得到的16QAM符号（接收端）
-    number16QAM = np.zeros(length)
-    bitsOut = np.zeros(length * 4)  # 用作存储解码得到的比特流（接收端）
+    symbol16QAM = np.zeros((length, 2), int)  # 用作存储解码得到的16QAM符号（接收端）
+    number_temp = np.zeros(length, int)
+    bits_temp = np.zeros(length * 4, int)  # 用作存储解码得到的比特流（接收端）
     dis = []
 
     for i in np.arange(length):
@@ -64,28 +77,23 @@ def DecodeQAM16(signal):
             pass
 
         symbol16QAM[i] = mapping[str(dis.index(min(dis)))]  # 返回最小距离的坐标
-        number16QAM[i] = dis.index(min(dis))
-        bitsOut[i * 4: i * 4 + 4] = toBits(dis.index(min(dis)))
+        number_temp[i] = dis.index(min(dis))
+        bits_temp[i * 4: i * 4 + 4] = toBits(dis.index(min(dis)))
         dis.clear()  # 列表清空，比较下一个符号
         pass
 
-    # print(type(bitsOut))
-    # print(type(bitsOut.astype(int)))
-    bitsOut = bitsOut.astype(int)
-    return bitsOut, number16QAM
+    # 在发送数据流中存在导频的时候
+    pos = getOfdmPosition()
+    number_out = (number_temp.reshape(ofdmNumber, -1))[pos]
+    bits_out = (bits_temp.reshape(ofdmNumber, -1))[pos]
+    return bits_out.ravel(), number_out.ravel()
 
 
 # #
 # @ Debug(文件内)
 # #
 if __name__ == "__main__":
-    liatT = [1, 2, 3, 4]
 
-    print(liatT.index(2))
-
-    a = bin(10)
-    b = list(a)
-    c = np.zeros((3, 4))
-
-    print(c)
+    pos = getOfdmPosition()
+    print(pos)
     pass

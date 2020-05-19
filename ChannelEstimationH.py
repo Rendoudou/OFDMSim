@@ -4,11 +4,10 @@
 @ DD
 """
 import numpy as np
-import scipy.signal as ss
-from Pilot import pilotsPos
+
 from ChannelConv import ConvLength
 from ChannelConv import LenH
-from ChannelConv import h_origin
+from Pilot import pilotsPos
 
 
 #
