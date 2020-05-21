@@ -80,8 +80,8 @@ def primaryProcess(snr):
     """
     信号经过信道，加噪声。此处是分为两路，再分开加噪声。 
     """
-    # info_pRx_ch = AWGNComplex2(info_pTx_ch, snr)
-    info_pRx_ch = info_pTx_ch
+    info_pRx_ch = AWGNComplex2(info_pTx_ch, snr)
+    # info_pRx_ch = info_pTx_ch
     if PrimaryProcessDebug:
         Ps = getComplexSignalPower(info_pTx_ch)
         Pn = getComplexSignalPower(info_pRx_ch - info_pTx_ch)
