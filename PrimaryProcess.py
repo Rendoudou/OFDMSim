@@ -24,11 +24,12 @@ from Rectify import rectify                         # 矫正坐标
 from DecodeQAM16 import DecodeQAM16                 # 解码16QAM
 from Anlysis import calcMismatchRatio               # 计算误码率
 
+from matplotlib import pylab as plt
+
 
 # 文件内调试用参数
 PrimaryProcessDebug = False
 snrOut = 0.0
-
 
 # #
 # @ Debug
@@ -49,8 +50,8 @@ def primaryProcess(snr):
     经过16QAM调制
     """
     qam, numberOrigin = qam16(originalBits)
-    if PrimaryProcessDebug:
-        plotSignalScatter(qam, 1)
+    # if PrimaryProcessDebug:
+    #     plotSignalScatter(qam, 1)
 
     """
         插入导频,另一组信号插入了导频
@@ -107,7 +108,7 @@ def primaryProcess(snr):
     """
     qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_p_awgn, 2)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_p_awgn, 1)  # 接收后FFT画图，加噪声后 16QAM
 
     """
         基于导频训练分界线
@@ -118,6 +119,10 @@ def primaryProcess(snr):
         基于分界线做出修正
     """
     qam_p_awgn_rec = rectify(qam_p_awgn, weights_x, weights_y)
+    if PrimaryProcessDebug:
+        plotSignalScatter(qam_p_awgn_rec, 2)  # 接收后FFT画图，加噪声后 16QAM
+
+    plt.show()
 
     """
     解调
@@ -152,5 +157,5 @@ def primaryProcess(snr):
 # #
 if __name__ == "__main__":
     PrimaryProcessDebug = True
-    primaryProcess(5)
+    primaryProcess(15)
     pass

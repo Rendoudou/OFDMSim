@@ -5,9 +5,12 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
+# import tensorflow as tf
 
 from GlobalParameter import MaxTrainingCycles, TrainingStep
 from Pilot import labels, pilotsPos
+
+################################ sihmoid ########################################
 
 figSeq = 1
 
@@ -50,7 +53,7 @@ def plotBestFit_x(wei, dataMat, labelMat):
     # plt.xlabel('real')
     # plt.ylabel('imag')
     # plt.show()
-    return x,y
+    return x, y
 
 
 #
@@ -85,13 +88,15 @@ def plotBestFit_y(wei, dataMat, labelMat):
     # fig = plt.figure(figSeq)
     # figSeq = figSeq + 1
     # ax = fig.add_subplot(111)
-    # ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
-    # ax.scatter(xcord2, ycord2, s=30, c='green')
+    # ax.scatter(xcord1, ycord1, s=30, c='red', label='0类')
+    # ax.scatter(xcord2, ycord2, s=30, c='green', label='1类')
     # ax.plot(x, y)
+    # plt.legend()
     # plt.xlabel('real')
     # plt.ylabel('imag')
+    # plt.grid(True)
     # plt.show()
-    return x,y
+    return x, y
 
 
 #
@@ -129,6 +134,7 @@ def sigmoid(inx):
     s = 1 / (1 + np.exp(-inx))
     return s
 
+
 #
 # 梯度上升训练
 #
@@ -152,6 +158,7 @@ def gradAscent(dataMatIn, classLabels):
 
     return weights
 
+
 #
 # 画出畸变的X轴和Y轴
 #
@@ -164,11 +171,13 @@ def plotXY(x1, y1, x2, y2):
     :return: 畸变的xy轴
     """
     plt.figure()
-    plt.plot(x1, y1, color = 'green', label = 'X轴')
-    plt.plot(x2, y2, color='green', label ='X轴')
+    plt.plot(x1, y1, color='red', label='x-axis')
+    plt.plot(x2, y2, color='green', label='y-axis')
+    plt.legend()
     plt.grid()
     plt.show()
     pass
+
 
 #
 # 训练新坐标轴
@@ -182,10 +191,14 @@ def trainAxis(ofdm_awgn):
     weights_x = gradAscent(data, x_label)  # 梯度上升,线性回归,训练xy轴
     weights_y = gradAscent(data, y_label)
     # x_x, x_y = plotBestFit_x(weights_y, data, y_label) # 区分y的正负，画出矫正的x轴
-    # y_x, y_y =plotBestFit_y(weights_x, data, x_label)  # 区分x的正负，画出矫正的y轴
+    # y_x, y_y = plotBestFit_y(weights_x, data, x_label)  # 区分x的正负，画出矫正的y轴
     # plotXY(x_x, x_y, y_x, y_y)
 
     return weights_x, weights_y
+
+
+################################ softmax ########################################
+
 
 
 #

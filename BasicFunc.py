@@ -8,6 +8,11 @@ import numpy as np
 from matplotlib import pylab as plt
 from GlobalParameter import TxLength
 
+x1 = np.arange(-5, 5, 0.1)
+x2 = np.zeros_like(x1)
+
+y2 = np.arange(-5, 5, 0.1)
+y1 = np.zeros_like(y2)
 
 # #
 # @ def ifftComplexSignal(info):
@@ -19,8 +24,12 @@ def plotSignalScatter(symbol, pos):
     symbolIn = np.array(symbol)
     symbol_r = symbolIn.real
     symbol_i = symbolIn.imag
+
     plt.figure(int(pos))
     plt.scatter(symbol_r, symbol_i)  # 实部 虚部 画星座图 a array 从0到n-1
+    plt.plot(x1, x2, color='red')
+    plt.plot(y1, y2, color='red')
+    plt.grid(True)
     plt.title(f'plot img {pos}')
 
     pass

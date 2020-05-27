@@ -6,10 +6,10 @@
 
 import numpy as np
 from BasicFunc import departComplex
-from GlobalParameter import IFFTLength, OFDMCarrierCount
+from GlobalParameter import IFFTLength, OFDMCarrierCount, ObviousDeviation
 
 FFTLength = IFFTLength
-
+MaxOffset = 1.5
 
 # #
 # @ def fftSignalWN(signal):
@@ -20,8 +20,10 @@ FFTLength = IFFTLength
 def fftSignalWN(signal):
     fftOutTemp = np.fft.fft(signal, FFTLength)
     fftOut = fftOutTemp[0:signal.shape[0], 0:OFDMCarrierCount]  # 得到原始数据部分，除去为快速傅里叶变化添加的0
-    # realTemp, imagTemp = departComplex(fftOut)  # 分离实部和虚部
-
+    if(ObviousDeviation):
+        fftOut = (fftOut.real + np.random.uniform(-MaxOffset, MaxOffset)) \
+                 + (fftOut.imag + np.random.uniform(-MaxOffset, MaxOffset)) * 1j
+        pass
     return fftOut
 
 
