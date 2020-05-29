@@ -4,13 +4,11 @@
 import warnings
 import matplotlib.pyplot as plt
 import numpy as np
-from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 from tqdm import tqdm
 from GlobalParameter import SNRStart, SNREnd, SNRPath, SNRDis, ErrorPerSNR, SymbolPerRound
 from PrimaryProcess import primaryProcess
 
-warnings.simplefilter('ignore', category=NumbaDeprecationWarning)
-warnings.simplefilter('ignore', category=NumbaPendingDeprecationWarning)
+warnings.filterwarnings("ignore")
 
 #
 # 主入口

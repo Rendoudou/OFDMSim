@@ -20,18 +20,19 @@ y1 = np.zeros_like(y2)
 # @ para 输入复数的信息：列表
 # @ return ifft后的复数符号，实部，虚部
 # #
-def plotSignalScatter(symbol, pos):
+def plotSignalScatter(symbol):
     symbolIn = np.array(symbol)
     symbol_r = symbolIn.real
     symbol_i = symbolIn.imag
 
-    plt.figure(int(pos))
+    plt.figure()
     plt.scatter(symbol_r, symbol_i)  # 实部 虚部 画星座图 a array 从0到n-1
     plt.plot(x1, x2, color='red')
     plt.plot(y1, y2, color='red')
+    plt.xlabel('real')
+    plt.ylabel('imag')
     plt.grid(True)
-    plt.title(f'plot img {pos}')
-
+    plt.show()
     pass
 
 

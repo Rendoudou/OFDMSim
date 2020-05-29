@@ -3,14 +3,12 @@
 @ 机器学习改善信道估计，主要是线性回归计算最合适的X&Y轴，修正接收信号。
 @ DD
 """
-import matplotlib.pyplot as plt
-import numpy as np
-# import tensorflow as tf
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 from GlobalParameter import MaxTrainingCycles, TrainingStep
 from Pilot import labels, pilotsPos
-
-################################ sihmoid ########################################
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
 
 figSeq = 1
 
@@ -43,16 +41,6 @@ def plotBestFit_x(wei, dataMat, labelMat):
 
     x = np.arange(-4.0, 4.0, 0.1)
     y = (-weights[0] - weights[1] * x) / weights[2]
-
-    # fig = plt.figure(figSeq)
-    # figSeq = figSeq + 1
-    # ax = fig.add_subplot(111)
-    # ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
-    # ax.scatter(xcord2, ycord2, s=30, c='green')
-    # ax.plot(x, y)
-    # plt.xlabel('real')
-    # plt.ylabel('imag')
-    # plt.show()
     return x, y
 
 
@@ -84,18 +72,6 @@ def plotBestFit_y(wei, dataMat, labelMat):
 
     y = np.arange(-4.0, 4.0, 0.1)
     x = -(y * weights[2] + weights[0]) / weights[1]
-
-    # fig = plt.figure(figSeq)
-    # figSeq = figSeq + 1
-    # ax = fig.add_subplot(111)
-    # ax.scatter(xcord1, ycord1, s=30, c='red', label='0类')
-    # ax.scatter(xcord2, ycord2, s=30, c='green', label='1类')
-    # ax.plot(x, y)
-    # plt.legend()
-    # plt.xlabel('real')
-    # plt.ylabel('imag')
-    # plt.grid(True)
-    # plt.show()
     return x, y
 
 
@@ -123,14 +99,6 @@ def loadData(ofdm_awgn):
 # 阶跃函数
 #
 def sigmoid(inx):
-    # out = np.zeros_like(inx, float)
-    # for i in np.arange(len(inx)):
-    #     if inx[i] >= 0:  # 对sigmoid函数的优化，避免了出现极大的数据溢出
-    #         out[i] =  1.0 / (1 + np.exp(-inx[i]))
-    #     else:
-    #         out[i] = np.exp(inx[i]) / (1 + np.exp(inx[i]))
-    #     pass
-    # return out
     s = 1 / (1 + np.exp(-inx))
     return s
 
@@ -162,8 +130,9 @@ def gradAscent(dataMatIn, classLabels):
 #
 # 画出畸变的X轴和Y轴
 #
-def plotXY(x1, y1, x2, y2):
+def plotXY(x1, y1, x2, y2, data):
     """
+    :param data:
     :param x1: 有关直线的数组
     :param y1:
     :param x2:
@@ -173,6 +142,9 @@ def plotXY(x1, y1, x2, y2):
     plt.figure()
     plt.plot(x1, y1, color='red', label='x-axis')
     plt.plot(x2, y2, color='green', label='y-axis')
+    plt.scatter(data[:, 1], data[:, 2], color='blue')
+    plt.xlabel('real')
+    plt.ylabel('imag')
     plt.legend()
     plt.grid()
     plt.show()
@@ -190,21 +162,20 @@ def trainAxis(ofdm_awgn):
     data, x_label, y_label = loadData(ofdm_awgn)
     weights_x = gradAscent(data, x_label)  # 梯度上升,线性回归,训练xy轴
     weights_y = gradAscent(data, y_label)
-    # x_x, x_y = plotBestFit_x(weights_y, data, y_label) # 区分y的正负，画出矫正的x轴
-    # y_x, y_y = plotBestFit_y(weights_x, data, x_label)  # 区分x的正负，画出矫正的y轴
-    # plotXY(x_x, x_y, y_x, y_y)
+    x_x, x_y = plotBestFit_x(weights_y, data, y_label)  # 区分y的正负，画出矫正的x轴
+    y_x, y_y = plotBestFit_y(weights_x, data, x_label)  # 区分x的正负，画出矫正的y轴
+    # plotXY(x_x, x_y, y_x, y_y, data)
 
     return weights_x, weights_y
-
-
-################################ softmax ########################################
-
 
 
 #
 # debug
 #
 if __name__ == "__main__":
-    figSeq += 1
-    print(figSeq)
+    tf.compat.v1.disable_eager_execution()  # 保证sess.run()能够正常运行
+    hello = tf.constant('hello,tensorflow')
+    sess = tf.compat.v1.Session()  # 版本2.0的函数
+    print(sess.run(hello))
+
     pass

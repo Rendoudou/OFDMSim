@@ -19,7 +19,7 @@ from ChannelConv import ConvLength                  # 串并转换,经过信道�
 from ChannelEstimationH import weakenChannelInterf  # 简易信道估计，去部分信道影响
 from FFTSignalWithNoise import fftSignalWN          # 解调ofdm信号
 from AddDeleteCP import deleteCP                    # 去循环前缀
-from MachineLearning import trainAxis               # 机器学习，线性回归计算畸变横纵坐标
+from LogisticRegression import trainAxis               # 机器学习，线性回归计算畸变横纵坐标
 from Rectify import rectify                         # 矫正坐标
 from DecodeQAM16 import DecodeQAM16                 # 解码16QAM
 from Anlysis import calcMismatchRatio               # 计算误码率
@@ -108,7 +108,7 @@ def primaryProcess(snr):
     """
     qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_p_awgn, 1)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_p_awgn)  # 接收后FFT画图，加噪声后 16QAM
 
     """
         基于导频训练分界线
@@ -120,9 +120,7 @@ def primaryProcess(snr):
     """
     qam_p_awgn_rec = rectify(qam_p_awgn, weights_x, weights_y)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_p_awgn_rec, 2)  # 接收后FFT画图，加噪声后 16QAM
-
-    plt.show()
+        plotSignalScatter(qam_p_awgn_rec)  # 接收后FFT画图，加噪声后 16QAM
 
     """
     解调
@@ -146,7 +144,6 @@ def primaryProcess(snr):
         correctRatioPr_rec = format(100 - errorRatio_rec * 100, '.4f')
         print(f'SNR in {snrPr}dB, real in {snr_outPr}dB. correct Ratio : {correctRatioPr} %. '
               f'rec correct Ratio : {correctRatioPr_rec} %.')
-        # plt.show()
         pass
 
     return errorCount, errorCount_rec

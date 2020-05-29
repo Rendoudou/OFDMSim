@@ -6,7 +6,7 @@
 from NextPow2 import nextPow2
 
 DEBUG = False  # 全局调试变量
-ObviousDeviation = False  # 明显偏移
+ObviousDeviation = True  # 明显偏移
 
 # initial set up 初始设置
 OFDMCarrierCount = 120  # 每个OFDM信号所携带的载波数目设置
@@ -29,17 +29,17 @@ Fd = 100  # HZ 最大多普勒频移
 
 # 线性回归,机器学习
 TrainingStep = 0.001  # 学习步长
-MaxTrainingCycles = 500  # 梯度上升训练限制
+MaxTrainingCycles = 300  # 梯度上升训练限制
 
 # calc type 计算错误率的类型
 CalcBitsError = True  # 是否计算误比特率
 
 # sim set up 仿真设置
-SNRStart = -20
-SNREnd = 50
-SNRPath = 0.5
+SNRStart = -10
+SNREnd = 20
+SNRPath = 1.0
 SNRDis = SNREnd - SNRStart
-ErrorPerSNR = 1000
+ErrorPerSNR = 10000
 SymbolPerRound = OFDMCarrierCount * SymbolPerCarrier * BitsPerSymbol
 SymbolPerRound_Pilots = SymbolPerRound  # 实际信息位不变，频带利用率下降
 
