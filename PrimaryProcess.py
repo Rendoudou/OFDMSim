@@ -19,12 +19,11 @@ from ChannelConv import ConvLength                  # 串并转换,经过信道�
 from ChannelEstimationH import weakenChannelInterf  # 简易信道估计，去部分信道影响
 from FFTSignalWithNoise import fftSignalWN          # 解调ofdm信号
 from AddDeleteCP import deleteCP                    # 去循环前缀
-from LogisticRegression import trainAxis               # 机器学习，线性回归计算畸变横纵坐标
+from LogisticRegression import trainAxis            # 机器学习，线性回归计算畸变横纵坐标
+from Softmax import data_train_tensor               # softmax多分类学习
 from Rectify import rectify                         # 矫正坐标
 from DecodeQAM16 import DecodeQAM16                 # 解码16QAM
 from Anlysis import calcMismatchRatio               # 计算误码率
-
-from matplotlib import pylab as plt
 
 
 # 文件内调试用参数
@@ -50,8 +49,8 @@ def primaryProcess(snr):
     经过16QAM调制
     """
     qam, numberOrigin = qam16(originalBits)
-    # if PrimaryProcessDebug:
-    #     plotSignalScatter(qam, 1)
+    if PrimaryProcessDebug:
+        plotSignalScatter(qam, '16QAM星座图')
 
     """
         插入导频,另一组信号插入了导频
@@ -108,19 +107,20 @@ def primaryProcess(snr):
     """
     qam_p_awgn = fftSignalWN(ofdm_p_awgn)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_p_awgn)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_p_awgn, '矫正前')  # 接收后FFT画图，加噪声后 16QAM
 
     """
         基于导频训练分界线
     """
     weights_x, weights_y = trainAxis(qam_p_awgn)  # 整体坐标系产生的偏移
+    # data_train_tensor(qam_p_awgn)
 
     """
         基于分界线做出修正
     """
     qam_p_awgn_rec = rectify(qam_p_awgn, weights_x, weights_y)
     if PrimaryProcessDebug:
-        plotSignalScatter(qam_p_awgn_rec)  # 接收后FFT画图，加噪声后 16QAM
+        plotSignalScatter(qam_p_awgn_rec, '矫正后')  # 接收后FFT画图，加噪声后 16QAM
 
     """
     解调

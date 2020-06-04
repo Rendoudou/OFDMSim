@@ -5,10 +5,15 @@
 """
 from __future__ import absolute_import, division, print_function, unicode_literals
 from GlobalParameter import MaxTrainingCycles, TrainingStep
-from Pilot import labels, pilotsPos
+from Pilot import labels_2_classification, pilotsPos
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+
+font = {'family':'SimHei'}  # 设置使用的字体（需要显示中文的时候使用）
+matplotlib.rc('font',**font)  # 设置显示中文，与字体配合使用
+matplotlib.rcParams['axes.unicode_minus']=False
 
 figSeq = 1
 
@@ -38,9 +43,20 @@ def plotBestFit_x(wei, dataMat, labelMat):
         else:
             xcord2.append(dataArr[i, 1])
             ycord2.append(dataArr[i, 2])
-
-    x = np.arange(-4.0, 4.0, 0.1)
+        pass
+    x = np.arange(-5.0, 5.0, 0.1)
     y = (-weights[0] - weights[1] * x) / weights[2]
+
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111)
+    # ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
+    # ax.scatter(xcord2, ycord2, s=30, c='green')
+    # ax.plot(x, y)
+    # plt.grid(True)
+    # plt.title('分类器模型一')
+    # plt.xlabel('real'); plt.ylabel('imag')
+    # plt.show()
+
     return x, y
 
 
@@ -69,9 +85,19 @@ def plotBestFit_y(wei, dataMat, labelMat):
         else:
             xcord2.append(dataArr[i, 1])
             ycord2.append(dataArr[i, 2])
-
-    y = np.arange(-4.0, 4.0, 0.1)
+        pass
+    y = np.arange(-5.0, 5.0, 0.1)
     x = -(y * weights[2] + weights[0]) / weights[1]
+
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111)
+    # ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
+    # ax.scatter(xcord2, ycord2, s=30, c='green')
+    # ax.plot(x, y)
+    # plt.grid(True)
+    # plt.title('分类器模型二')
+    # plt.xlabel('real'); plt.ylabel('imag')
+    # plt.show()
     return x, y
 
 
@@ -90,8 +116,8 @@ def loadData(ofdm_awgn):
         data[i, :] = np.array([1.0, pilots_awgn_re[i].real, pilots_awgn_re[i].imag])
         pass
 
-    x_labels = labels[:, :, 0].reshape((-1, 1))
-    y_labels = labels[:, :, 1].reshape((-1, 1))
+    x_labels = labels_2_classification[:, :, 0].reshape((-1, 1))
+    y_labels = labels_2_classification[:, :, 1].reshape((-1, 1))
     return data, x_labels, y_labels
 
 
@@ -145,6 +171,7 @@ def plotXY(x1, y1, x2, y2, data):
     plt.scatter(data[:, 1], data[:, 2], color='blue')
     plt.xlabel('real')
     plt.ylabel('imag')
+    plt.title('训练后的实轴与虚轴')
     plt.legend()
     plt.grid()
     plt.show()
@@ -164,7 +191,7 @@ def trainAxis(ofdm_awgn):
     weights_y = gradAscent(data, y_label)
     x_x, x_y = plotBestFit_x(weights_y, data, y_label)  # 区分y的正负，画出矫正的x轴
     y_x, y_y = plotBestFit_y(weights_x, data, x_label)  # 区分x的正负，画出矫正的y轴
-    # plotXY(x_x, x_y, y_x, y_y, data)
+    plotXY(x_x, x_y, y_x, y_y, data)
 
     return weights_x, weights_y
 

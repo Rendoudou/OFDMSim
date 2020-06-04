@@ -5,8 +5,12 @@
 """
 
 import numpy as np
+import matplotlib
 from matplotlib import pylab as plt
-from GlobalParameter import TxLength
+
+font = {'family':'SimHei'}  # 设置使用的字体（需要显示中文的时候使用）
+matplotlib.rc('font',**font)  # 设置显示中文，与字体配合使用
+matplotlib.rcParams['axes.unicode_minus']=False
 
 x1 = np.arange(-5, 5, 0.1)
 x2 = np.zeros_like(x1)
@@ -20,7 +24,7 @@ y1 = np.zeros_like(y2)
 # @ para 输入复数的信息：列表
 # @ return ifft后的复数符号，实部，虚部
 # #
-def plotSignalScatter(symbol):
+def plotSignalScatter(symbol, title):
     symbolIn = np.array(symbol)
     symbol_r = symbolIn.real
     symbol_i = symbolIn.imag
@@ -31,6 +35,7 @@ def plotSignalScatter(symbol):
     plt.plot(y1, y2, color='red')
     plt.xlabel('real')
     plt.ylabel('imag')
+    plt.title(title)
     plt.grid(True)
     plt.show()
     pass

@@ -7,7 +7,15 @@
 
 import numpy as np
 from QAM16 import qam16
-from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier, BitsPerSymbol, PilotInterval
+from GlobalParameter import OFDMCarrierCount, SymbolPerCarrier, BitsPerSymbol, PilotInterval, mapping
+
+# 静态变量
+pilotsNeed = int(SymbolPerCarrier / PilotInterval)  # 导频需要的行数，实质信息行数除以导频间的信息间隔
+pilots = np.zeros((pilotsNeed, OFDMCarrierCount), complex)  # 存储生成的导频
+labels_2_classification = np.zeros((pilotsNeed, OFDMCarrierCount, 2), int)  # 记录大致象限
+labels_16_classification = np.zeros(pilotsNeed * OFDMCarrierCount, int)
+pilotsPos = np.zeros(pilotsNeed, int)  # 块状导频的位置
+basic_0 = int('0')
 
 
 #
@@ -23,7 +31,7 @@ def creatPilot():
 #
 # 块状导频需要的预设导频符号流
 #
-def getPosi(symbol):
+def getLabel_2_classification(symbol):
     n = len(symbol)
     posi = np.zeros((n, 2))
     for i in np.arange(n):
@@ -45,10 +53,21 @@ def getPosi(symbol):
     return posi
 
 
-pilotsNeed = int(SymbolPerCarrier / PilotInterval)  # 导频需要的行数，实质信息行数除以导频间的信息间隔
-pilots = np.zeros((pilotsNeed, OFDMCarrierCount), complex)  # 存储生成的导频
-labels = np.zeros((pilotsNeed, OFDMCarrierCount, 2), int)  # 记录大致象限
-pilotsPos = np.zeros(pilotsNeed, int)  # 块状导频的位置
+#
+# 字典通过value 返回键值 get_key(dict, value):
+#
+def get_key(dict_search, value):
+    return [k for k, v in dict_search.items() if v == value]
+
+
+#
+# getLabel_16_classification
+#
+def getLabel_16_classification(symbol):
+    labels = np.zeros(OFDMCarrierCount, int)  # 每次解析一行
+    for i in np.arange(OFDMCarrierCount):
+        labels[i] = int((get_key(mapping, [symbol[i].real, symbol[i].imag]))[0]) - basic_0
+    return labels
 
 
 #
@@ -56,14 +75,13 @@ pilotsPos = np.zeros(pilotsNeed, int)  # 块状导频的位置
 #
 def insertPilot(qamStream):
     symbolMatrix = np.array(qamStream).reshape((-1, OFDMCarrierCount))  # n行，列为ofdm信号的长度
-    # pilotsNeed = int(SymbolPerCarrier / PilotInterval)  # 导频需要的行数，实质信息行数除以导频间的信息间隔
     matrixWithPilots = np.zeros((SymbolPerCarrier + pilotsNeed, OFDMCarrierCount), complex)  # 新建空数组空间用于存储加入导频的符号帧
 
-    # pilots = np.zeros((pilotsNeed, OFDMCarrierCount), complex)  # 存储生成的导频
-    # labels = np.zeros((pilotsNeed, OFDMCarrierCount, 2))  # 记录大致象限
     for i in np.arange(pilotsNeed):  # 0 - 3 插入符号
         pilots[i, :] = creatPilot()
-        labels[i, :, :] = getPosi(pilots[i, :])
+        labels_2_classification[i, :, :] = getLabel_2_classification(pilots[i])
+        labels_16_classification[i * OFDMCarrierCount: OFDMCarrierCount * i + OFDMCarrierCount] = \
+            getLabel_16_classification(pilots[i])
         matrixWithPilots[i * (PilotInterval + 1)] = pilots[i]
         pilotsPos[i] = i * (PilotInterval + 1)  # 记录导频在符号帧中的位置
         matrixWithPilots[(i * (PilotInterval + 1) + 1): ((i + 1) * (PilotInterval + 1))] = \
@@ -77,17 +95,5 @@ def insertPilot(qamStream):
 # debug
 #
 if __name__ == "__main__":
-    a = np.zeros((3, 4), complex)
 
-    print(a.imag)
-    print(a.real)
-
-    print(a.shape[0])
-    print(a[0][1])
-    print(a[0:2])
-    print(a[0:3])
-    b = complex(1, -2)
-    print(b)
-    print(b.real)
-    print(b.imag)
     pass
